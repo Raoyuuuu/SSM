@@ -63,29 +63,45 @@
     <div class="row">
         <!--分页文字-->
         <div class="col-md-6">
-         当前页数：
+         当前${pageInfo.pageNum}页，总${pageInfo.pages}页,总${pageInfo.total}条记录
         </div>
         <!--分页条-->
         <div class="col-md-6">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li><a href="#">首页</a></li>
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">末页</a></li>
+
+                    <li><a href="${APP_PATH}/emps?pn=1">首页</a></li>
+
+                    <!--有上一页，就可执行上页的操作 否则隐藏-->
+                    <c:if test="${pageInfo.hasPreviousPage}">
+                        <li>
+                            <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+
+                    <!--所在的页面数字高亮-->
+                    <c:forEach items="${pageInfo.navigatepageNums}" var="pageNum2">
+                        <c:if test="${pageNum2==pageInfo.pageNum}">
+                            <li class="active"><a href="#">${pageNum2}</a></li>
+                        </c:if>
+                        <!--其他页面正常-->
+                        <c:if test="${pageNum2!=pageInfo.pageNum}">
+                            <li><a href="${APP_PATH}/emps?pn=${pageNum2}">${pageNum2}</a></li>
+                        </c:if>
+                    </c:forEach>
+
+                    <!--有下一页，就可执行下页的操作 否则隐藏-->
+                    <c:if test="${pageInfo.hasNextPage}">
+                        <li>
+                            <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum+1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+
+                    <li><a href="${APP_PATH}/emps?pn=${pageInfo.pages}">末页</a></li>
                 </ul>
             </nav>
         </div>
