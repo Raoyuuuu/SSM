@@ -15,8 +15,8 @@
 
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
-            <!--分页参数合理化  -->
-            <!--<property name="reasonable" value="true"/>-->
+            <!--分页参数合理化 分页左边数据已经在第一页后再点击上一页不能出现 -1 -2 最后一页后也不能再显示没有的数据了 -->
+            <property name="reasonable" value="true"/>
         </plugin>
     </plugins>
 </configuration>
