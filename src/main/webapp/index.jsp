@@ -376,14 +376,28 @@
             type:"POST",
             data:$("#empAddModal form").serialize(),
             success:function (result) {
-                //alert(result.msg);
-                //员工保存成功后关闭模态框 并且来到最后一页
-                $("#empAddModal").modal('hide');
-                //给一个比总条数多的数字  分页插件指挥跳转到最后一页 但是不保险
-                //to_page(999);
-                //定义一个totalrecord  在保存/解析并显示左边分页信息 page_info(result);
-                // 里面将总记录数拿出来 totalRecord =info.total;
-                to_page(totalRecord);
+                if(result.code==100){
+                    //alert(result.msg);
+                    //员工保存成功后关闭模态框 并且来到最后一页
+                    $("#empAddModal").modal('hide');
+                    //给一个比总条数多的数字  分页插件指挥跳转到最后一页 但是不保险
+                    //to_page(999);
+                    //定义一个totalrecord  在保存/解析并显示左边分页信息 page_info(result);
+                    // 里面将总记录数拿出来 totalRecord =info.total;
+                    to_page(totalRecord);
+                }else{
+                    //显示校验失败信息
+                    if(undefined!=result.map.errorFields.email){
+                        //显示邮箱错误信息
+                        validate_add_msg("#email_add","error",result.map.errorFields.email);
+                    }
+                    if(undefined!=result.map.errorFields.empName){
+                        //显示名字错误信息
+                        validate_add_msg("#empName_add","error",result.map.errorFields.empName);
+                    }
+                    //console.log(result.map.errorFields);
+                }
+
             }
         })
 

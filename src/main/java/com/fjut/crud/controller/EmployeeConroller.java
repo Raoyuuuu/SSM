@@ -8,12 +8,18 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class EmployeeConroller {
@@ -50,9 +56,21 @@ public class EmployeeConroller {
     //员工保存
     @RequestMapping(value="/saveEmp",method = RequestMethod.POST)
     @ResponseBody
-    public Msg save(Employee employee){
-        employeeService.save(employee);
-        return Msg.success();
+    public Msg save(@Valid  Employee employee, BindingResult result){
+        if(result.hasErrors()){
+            //校验失败 返回校验失败的错误信息
+            Map<String,Object> map = new HashMap<String, Object>();
+            List<FieldError> errors = result.getFieldErrors();
+            for(FieldError fieldError:errors){
+                map.put(fieldError.getField(),fieldError.getDefaultMessage());
+
+            }
+            return Msg.fail().add("errorFields",map);
+        }else{
+            employeeService.save(employee);
+            return Msg.success();
+        }
+
     }
 
     //分页查询所有员工信息
