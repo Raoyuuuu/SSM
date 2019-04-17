@@ -1,6 +1,8 @@
 package com.fjut.crud.test;
 
 
+import com.fjut.crud.bean.Customer;
+import com.fjut.crud.dao.CustomerMapper;
 import com.fjut.crud.dao.DepartmentMapper;
 import com.fjut.crud.dao.EmployeeMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -20,8 +22,9 @@ public class MapperTest {
     DepartmentMapper departmentMapper;
     @Autowired
     EmployeeMapper employeeMapper;
-//    @Autowired
-//    CustomerMapper customerMapper;
+
+    @Autowired
+    CustomerMapper customerMapper;
 
     @Autowired
     SqlSession sqlSession;

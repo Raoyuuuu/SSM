@@ -20,6 +20,9 @@ public interface CustomerMapper {
 
     Customer selectByPrimaryKey(Long custId);
 
+    //自定义
+    List<Customer> selectByExampleWithDase(CustomerExample example);
+
     int updateByExampleSelective(@Param("record") Customer record, @Param("example") CustomerExample example);
 
     int updateByExample(@Param("record") Customer record, @Param("example") CustomerExample example);

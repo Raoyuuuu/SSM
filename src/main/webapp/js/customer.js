@@ -13,6 +13,7 @@ function to_page(pn){
         data:"pn="+pn,
         type:"GET",
         success:function (result) {
+            console.log(result)
             //解析并显示员工信息
             customer_table(result);
             //解析并显示左边分页信息

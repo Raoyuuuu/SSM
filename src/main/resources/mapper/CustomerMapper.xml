@@ -10,6 +10,23 @@
     <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
     <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
   </resultMap>
+  <!--自定义级联查询-->
+  <resultMap id="WithDaseResultMap" type="com.fjut.crud.bean.Customer">
+    <id column="cust_id" jdbcType="BIGINT" property="custId" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="cust_source" jdbcType="VARCHAR" property="custSource" />
+    <result column="cust_industry" jdbcType="VARCHAR" property="custIndustry" />
+    <result column="cust_level" jdbcType="VARCHAR" property="custLevel" />
+    <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+    <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
+    <!--指定联合查询出的字典字段的封装-->
+    <association property="baseDict" javaType="com.fjut.crud.bean.BaseDict">
+      <id column="cust_source" property="dict_id" />
+      <id column="cust_industry" property="dict_id" />
+      <id column="cust_level" property="dict_id" />
+      <result column="dict_item_name" property="dictItemName" />
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -71,6 +88,44 @@
   <sql id="Base_Column_List">
     cust_id, cust_name, cust_source, cust_industry, cust_level, cust_mobile, cust_email
   </sql>
+  <sql id="WithDase_Column_List">
+    c.cust_id, c.cust_name, cust_source, cust_industry, cust_level, c.cust_mobile, c.cust_email,
+    s.dict_item_name,i.dict_item_name,l.dict_item_name,s.dict_id,i.dict_id,l.dict_id
+  </sql>
+
+  <select id="selectByExampleWithDase" parameterType="com.fjut.crud.bean.CustomerExample" resultMap="WithDaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    SELECT
+    c.`cust_id`,
+    c.`cust_name`,
+    s.`dict_item_name` `cust_source`,
+    i.`dict_item_name` `cust_industry`,
+    l.`dict_item_name` `cust_level`,
+    c.`cust_mobile`,
+    c.`cust_email`
+    FROM
+    cst_customer c
+    LEFT JOIN base_dict s ON c.`cust_source`= s.`dict_id`
+    LEFT JOIN base_dict i ON c.`cust_industry`= i.`dict_id`
+    LEFT JOIN base_dict l ON c.`cust_level`= l.`dict_id`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithDase" parameterType="java.lang.Long" resultMap="WithDaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cst_customer
+    where cust_id = #{custId,jdbcType=BIGINT}
+  </select>
+
   <select id="selectByExample" parameterType="com.fjut.crud.bean.CustomerExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
