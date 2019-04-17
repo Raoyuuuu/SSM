@@ -1,0 +1,19 @@
+body{
+    padding: 0%;
+    background:url('/images/timg.jpg') no-repeat;
+    background-size: cover;
+}
+.form-container{
+
+    padding: 10px 40px;
+    margin:50px 0 0 0 ;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    color: #ffffff;
+    -webkit-box-shadow: 6px 7px 31px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 7px 31px 0px rgba(0,0,0,0.75);
+    box-shadow: 6px 7px 31px 0px rgba(0,0,0,0.75);
+}
+.form-container h2{
+    text-align: center;
+}

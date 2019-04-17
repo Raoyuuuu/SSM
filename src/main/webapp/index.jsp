@@ -2,6 +2,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>员工列表</title>
     <%
         pageContext.setAttribute("APP_PATH",request.getContextPath());
@@ -203,7 +206,7 @@
 
         var emps = result.map.pageInfo.list;
         $.each(emps,function (index,item) {
-            var checkBoxTd = $("<td><input type='checkbox' class='check_item' /></td>")
+            var checkBoxTd = $("<td><input type='checkbox' class='check_item' /></td>");
             var empIdTd = $("<td></td>").append(item.empId);
             var empNameTd = $("<td></td>").append(item.empName);
             var genderTd = $("<td></td>").append(item.gender=='M'?"男":"女");
@@ -214,11 +217,13 @@
                 .append("编辑");
             //为编辑按钮添加一个自定义的属性，来表示当前员工的id
             editBtn.attr("edit-id",item.empId);
+
             var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("删除");
             //为删除按钮添加一个自定义的属性，来表示当前员工的id
             delBtn.attr("del-id",item.empId);
+
             var btnTd =$("<td></td>").append(editBtn).append(" ").append(delBtn);
             $("<tr></tr>").append(checkBoxTd)
                 .append(empIdTd)

@@ -1,7 +1,6 @@
 package com.fjut.crud.test;
 
-import com.fjut.crud.bean.Department;
-import com.fjut.crud.bean.Employee;
+
 import com.fjut.crud.dao.DepartmentMapper;
 import com.fjut.crud.dao.EmployeeMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +20,9 @@ public class MapperTest {
     DepartmentMapper departmentMapper;
     @Autowired
     EmployeeMapper employeeMapper;
+//    @Autowired
+//    CustomerMapper customerMapper;
+
     @Autowired
     SqlSession sqlSession;
 
@@ -35,12 +37,23 @@ public class MapperTest {
 //        employeeMapper.insertSelective(new Employee(null,"望月","M","asd@126.com",1));
 
         //批量生成
-        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-        for(int i=0;i<100;i++){
-            String uid = UUID.randomUUID().toString().substring(0, 5)+i;
-            mapper.insertSelective(new Employee(null,uid,"M",uid+"@126.com",1));
+//        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+//        for(int i=0;i<100;i++){
+//            String uid = UUID.randomUUID().toString().substring(0, 5)+i;
+//            mapper.insertSelective(new Employee(null,uid,"M",uid+"@126.com",1));
+//
+//        }
 
-        }
+        //添加客户信息
+        //customerMapper.insertSelective(new Customer(null,"李月","电话营销","网络教育","经理","13505618745","ceshi@126.com"));
+
+        //批量添加客户信息
+//        CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class);
+//        for(int i=1;i<=30;i++){
+//            String uid = UUID.randomUUID().toString().substring(0, 2)+i;
+//            mapper.insertSelective(new Customer(null,uid+"王月","电话营销","房地产","经理","13505618745",uid+"jia@126.com"));
+//        }
+
 
     }
 }
