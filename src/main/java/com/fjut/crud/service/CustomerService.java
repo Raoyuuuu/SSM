@@ -16,4 +16,8 @@ public class CustomerService {
     public List<Customer> getAll() {
         return customerMapper.selectByExampleWithDase(null);
     }
+
+    public void save(Customer customer) {
+        customerMapper.insertSelective(customer);
+    }
 }

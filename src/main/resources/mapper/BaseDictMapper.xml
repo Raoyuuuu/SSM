@@ -73,6 +73,7 @@
     dict_id, dict_type_code, dict_type_name, dict_item_name, dict_item_code, dict_sort, 
     dict_enable, dict_memo
   </sql>
+  <!--根据code找信息来源-->
   <select id="selectByExample" parameterType="com.fjut.crud.bean.BaseDictExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
