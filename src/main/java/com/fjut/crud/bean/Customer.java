@@ -1,5 +1,7 @@
 package com.fjut.crud.bean;
 
+import java.util.List;
+
 public class Customer {
     private Long custId;
 
@@ -15,18 +17,32 @@ public class Customer {
 
     private String custEmail;
 
-    public Customer(){
-        super();
+    private BaseDict baseDictSource;
+    private BaseDict baseDictIndustry;
+    private BaseDict baseDictLevel;
+
+    public BaseDict getBaseDictSource() {
+        return baseDictSource;
     }
 
-    public Customer(Long custId, String custName, String custSource, String custIndustry, String custLevel, String custMobile, String custEmail) {
-        this.custId = custId;
-        this.custName = custName;
-        this.custSource = custSource;
-        this.custIndustry = custIndustry;
-        this.custLevel = custLevel;
-        this.custMobile = custMobile;
-        this.custEmail = custEmail;
+    public void setBaseDictSource(BaseDict baseDictSource) {
+        this.baseDictSource = baseDictSource;
+    }
+
+    public BaseDict getBaseDictIndustry() {
+        return baseDictIndustry;
+    }
+
+    public void setBaseDictIndustry(BaseDict baseDictIndustry) {
+        this.baseDictIndustry = baseDictIndustry;
+    }
+
+    public BaseDict getBaseDictLevel() {
+        return baseDictLevel;
+    }
+
+    public void setBaseDictLevel(BaseDict baseDictLevel) {
+        this.baseDictLevel = baseDictLevel;
     }
 
     public Long getCustId() {

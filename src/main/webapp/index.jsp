@@ -13,6 +13,12 @@
 
     <script src="${APP_PATH}/static/js/jquery-3.3.1.min.js"></script>
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        .modal-backdrop {
+            filter: alpha(opacity=0)!important;
+            opacity: 0!important;
+        }
+    </style>
 </head>
 <body>
 

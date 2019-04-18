@@ -34,9 +34,9 @@ function customer_table(result) {
         var checkBoxTd = $("<td><input type='checkbox' class='check_item'></td>");
         var custIdTd = $("<td></td>").append(item.custId);
         var custNameTd = $("<td></td>").append(item.custName);
-        var custSourceTd = $("<td></td>").append(item.custSource);
-        var custIndustryTd = $("<td></td>").append(item.custIndustry);
-        var custLevelTd = $("<td></td>").append(item.custLevel);
+        var custSourceTd = $("<td></td>").append(item.baseDictSource.dictItemName);
+        var custIndustryTd = $("<td></td>").append(item.baseDictIndustry.dictItemName);
+        var custLevelTd = $("<td></td>").append(item.baseDictLevel.dictItemName);
         var custMobileTd = $("<td></td>").append(item.custMobile);
         var custEmailTd = $("<td></td>").append(item.custEmail);
 
@@ -136,3 +136,21 @@ function page_nav(result) {
     var navEle = $("<nav></nav>").append(ul);
     navEle.appendTo("#page_nav");
 }
+
+//表单重置的方法
+function reset_form(e){
+    //清空数据
+    $(e)[0].reset();
+    //清空样式
+    $(e).find("*").removeClass("has-success has-error");
+    $(e).find(".help-block").text("");
+
+}
+
+//点击新增弹出模态框
+$("#cust_add_modal_btn").click(function () {
+
+    $("#addModal").modal({
+        backdrop:"static",
+    });
+});

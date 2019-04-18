@@ -10,10 +10,62 @@
         pageContext.setAttribute("APP_PATH",request.getContextPath());
     %>
     <link rel="stylesheet" href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-
+    <style>
+        .modal-backdrop {
+            filter: alpha(opacity=0)!important;
+            opacity: 0!important;
+        }
+    </style>
 
 </head>
 <body>
+
+<!--新增模态框-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addModalLabel">客户新增</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">客户姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="custName_add" name="custName" placeholder="name">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">客户来源</label>
+                        <div class="col-sm-3">
+                            <!--部门提交部门id即可-->
+                            <select class="form-control" name="dId" id="dept_add_select"></select>
+                        </div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="custSource_add" name="custSource" placeholder="Customer Source">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">客户行业</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="custIndustry_add" name="custIndustry" placeholder="Customer Source">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--搭建显示页面-->
 <div class="container">
     <!--标题-->

@@ -87,7 +87,13 @@
   </sql>
   <!--员工部门联合查询-->
   <sql id="WithDept_Column_List">
-    e.emp_id, e.emp_name, e.gender, e.email, e.d_id,d.dept_id,d.dept_name
+    e.emp_id,
+    e.emp_name,
+    e.gender,
+    e.email,
+    e.d_id,
+    d.dept_id,
+    d.dept_name
   </sql>
   <!--查询员工同时带部门信息-->
   <select id="selectByExampleWithDept"  resultMap="WithDeptResultMap">
