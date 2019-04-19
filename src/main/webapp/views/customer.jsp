@@ -353,14 +353,16 @@
         //清除表单数据
         reset_form("#addModal form");
         //获取字典数据
-        getAllDict("#addModal select");
+        getSource("#custSource_add");
+        getIndustry("#custIndustry_add");
+        getLevel("#custLevel_add")
         $("#addModal").modal({
             backdrop:"static",
         });
     });
 
     //获取字典数据填充下拉框
-    function getAllDict(ele) {
+    function getSource(ele) {
         $(ele).empty();
         $.ajax({
             url:"/getAllDict",
@@ -371,21 +373,47 @@
                 $.each(lists,function () {
                     if(this.dictTypeCode==002){
                         var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
-                        options.appendTo("#custSource_add");
+                        options.appendTo(ele);
                     }
+
+                });
+            }
+        });
+    }
+    function getIndustry(ele) {
+        $(ele).empty();
+        $.ajax({
+            url:"/getAllDict",
+            type:"GET",
+            success:function (result) {
+                var lists = result.map.list;
+                //console.log(lists);
+                $.each(lists,function () {
                     if(this.dictTypeCode==001){
                         var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
-                        options.appendTo("#custIndustry_add");
-                    }
-                    if(this.dictTypeCode==006){
-                        var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
-                        options.appendTo("#custLevel_add");
+                        options.appendTo(ele);
                     }
                 });
             }
         });
     }
-
+    function getLevel(ele) {
+        $(ele).empty();
+        $.ajax({
+            url:"/getAllDict",
+            type:"GET",
+            success:function (result) {
+                var lists = result.map.list;
+                //console.log(lists);
+                $.each(lists,function () {
+                    if(this.dictTypeCode==006){
+                        var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
+                        options.appendTo(ele);
+                    }
+                });
+            }
+        });
+    }
     //抽取校验信息提示
     function validate_add_msg(ele,status,msg){
         //初始化 清除元素的校验状态 防止class=“has-success has-error”重复添加
@@ -400,12 +428,34 @@
         };
     }
 
-    //表单校验
+    //表单校验移开后开始校验
+    $("#custName_add").change(function () {
+        var custName = $("#custName_add").val();
+        var regName =/(^[a-z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+        if(!regName.test(custName)){
+            validate_add_msg("#custName_add","error","用户名为2-5位中文，或者6-16位英文和数字组合");
+
+        }else{
+            validate_add_msg("#custName_add","success","");
+        };
+    });
+    $("#email_add").change(function () {
+        var email = $("#email_add").val();
+        var regEmail =/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if(!regEmail.test(email)){
+            validate_add_msg("#email_add","error","邮箱格式错误!");
+
+        }else{
+            validate_add_msg("#email_add","success","");
+        }
+    });
+
+    //提交表单校验
     function validate_add_form(){
         var custName = $("#custName_add").val();
         var regName =/(^[a-z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
         if(!regName.test(custName)){
-            validate_add_msg("#custName_add","error","用户名为2-5位中文，或者3-16位英文和数字组合");
+            validate_add_msg("#custName_add","error","用户名为2-5位中文，或者6-16位英文和数字组合");
             return false;
         }else{
             validate_add_msg("#custName_add","success","");
@@ -464,10 +514,12 @@
 
     //用这种方法为编辑按钮绑定事件 弹出员工修改模态框
     $(document).on("click",".edit_btn",function () {
-        //查出部门信息，并显示
-        getAllDept("#updateModal select")
-        // //查出员工信息，并显示
-        // getEmp($(this).attr("edit-id"));
+        //清除表单数据
+        reset_form("#updateModal form");
+        //获取字典数据
+        getSource("#custSource_update");
+        getIndustry("#custIndustry_update");
+        getLevel("#custLevel_update");
         // //弹出模态框 把员工id传递给模态框的更新按钮
         // $("#emp_update_btn").attr("edit-id",$(this).attr("edit-id"));
         $("#updateModal").modal({

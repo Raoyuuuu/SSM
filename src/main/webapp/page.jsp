@@ -63,7 +63,7 @@
                 <li><a href="#">工作报告</a></li>
                 <li><a href="#">跟进记录</a></li>
                 <li><a href="#">费用报销</a></li>
-                <li><a href="#">知识库</a></li>
+                <li><a href="${APP_PATH}/views/knowledge.jsp" target="mainFrame">知识库</a></li>
                 <li><a href="#sub1" data-toggle="collapse">更多<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                     <ul id="sub1" class="nav collapse">
                         <li><a href="#">权限</a></li>
