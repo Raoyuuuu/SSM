@@ -49,7 +49,7 @@
         <!--table指定每个表的生成策略-->
         <!--<table tableName="tbl_emp" domainObjectName="Employee" />-->
         <!--<table tableName="tbl_dept" domainObjectName="Department" />-->
-        <table tableName=" base_knowledge" domainObjectName="KnowledgeBase" />
-        <table tableName="base_item" domainObjectName="BaseItem" />
+        <table tableName="base_article" domainObjectName="BaseArticle" />
+        <!--<table tableName="base_item" domainObjectName="BaseItem" />-->
     </context>
 </generatorConfiguration>

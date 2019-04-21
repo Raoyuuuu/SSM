@@ -1,10 +1,9 @@
 package com.fjut.crud.test;
 
 
-import com.fjut.crud.bean.Customer;
-import com.fjut.crud.dao.CustomerMapper;
-import com.fjut.crud.dao.DepartmentMapper;
-import com.fjut.crud.dao.EmployeeMapper;
+import com.fjut.crud.bean.BaseArticle;
+import com.fjut.crud.bean.BaseItem;
+import com.fjut.crud.dao.*;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,15 +22,22 @@ public class MapperTest {
     DepartmentMapper departmentMapper;
     @Autowired
     EmployeeMapper employeeMapper;
-
     @Autowired
     CustomerMapper customerMapper;
-
     @Autowired
     SqlSession sqlSession;
+    @Autowired
+    BaseItemMapper baseItemMapper;
+    @Autowired
+    BaseArticleMapper baseArticleMapper;
 
     @Test
         public  void testCURD(){
+
+        List<BaseArticle> articles = baseArticleMapper.getArtWithItem();
+        System.out.println(articles);
+//        BaseItem baseItem = baseItemMapper.getItemById(1);
+//        System.out.println(baseItem);
 
         //插入部门数据
 //      departmentMapper.insertSelective(new Department(null,"事业部"));

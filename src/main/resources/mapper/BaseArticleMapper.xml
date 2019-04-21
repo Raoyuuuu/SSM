@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.BaseArticleMapper">
+  <resultMap id="BaseResultMap" type="com.fjut.crud.bean.BaseArticle">
+    <id column="art_id" jdbcType="INTEGER" property="artId" />
+    <result column="art_cate" jdbcType="INTEGER" property="artCate" />
+    <result column="art_title" jdbcType="VARCHAR" property="artTitle" />
+    <result column="art_content" jdbcType="LONGVARCHAR" property="artContent" />
+    <result column="art_author" jdbcType="VARCHAR" property="artAuthor" />
+    <result column="art_state" jdbcType="INTEGER" property="artState" />
+    <result column="art_create_time" jdbcType="TIMESTAMP" property="artCreateTime" />
+    <result column="art_update_time" jdbcType="TIMESTAMP" property="artUpdateTime" />
+    <result column="art_url" jdbcType="VARCHAR" property="artUrl" />
+
+    <association property="baseItem" javaType="com.fjut.crud.bean.BaseItem">
+      <id column="item_id" jdbcType="INTEGER" property="itemId" />
+      <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+        a.`art_id`,
+        a.`art_cate`,
+        a.`art_title`,
+        a.`art_content`,
+        a.`art_author`,
+        a.`art_state`,
+        a.`art_create_time`,
+        a.`art_update_time`,
+        a.`art_url`,
+        i.`item_id`,
+        i.`item_name`
+  </sql>
+
+  <select id="getArtWithItem" resultMap="BaseResultMap">
+      SELECT
+        <include refid="Base_Column_List"/>
+      FROM
+        `base_article` a
+      LEFT JOIN `base_item` i ON a.`art_cate`=i.`item_id`
+  </select>
+
+</mapper>
