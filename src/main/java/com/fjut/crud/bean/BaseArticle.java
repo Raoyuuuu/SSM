@@ -2,9 +2,10 @@ package com.fjut.crud.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BaseArticle {
+public class BaseArticle implements Serializable {
     private Integer artId;
 
     private Integer artCate;

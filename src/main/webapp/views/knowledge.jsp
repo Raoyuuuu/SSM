@@ -101,7 +101,7 @@
     <!--按钮-->
     <div class="row" style="margin-bottom: 20px;margin-top: 40px">
         <div class="col-md-4">
-            <button class="btn btn-info" id="art_add_modal_btn">新建内容</button>
+            <button class="btn btn-info"><a href="/views/editKno.jsp" target="_self" style="text-decoration: none">新建内容</a></button>
         </div>
     </div>
     <!--显示表格数据-->
@@ -150,13 +150,13 @@
     function to_page(pn){
         $.ajax({
 
-            //url:getUrl()+'/getAllKno',
-            url:"/getAll",
+            url:getUrl()+'/getAll',
+            //url:"/getAll",
             data:"pn="+pn,
             type:"POST",
-            // beforeSend: function (XMLHttpRequest) {
-            //     XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
-            // },
+             beforeSend: function (XMLHttpRequest) {
+                 XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
+             },
             success:function (result) {
                 console.log(result)
                 //解析并显示员工信息
