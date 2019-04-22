@@ -79,7 +79,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="emp_update_btn">更新</button>
+                <button type="button" class="btn btn-primary" id="update_btn">更新</button>
             </div>
         </div>
     </div>
@@ -489,10 +489,6 @@
                 if(result.code==100){
                     //员工保存成功后关闭模态框 并且来到最后一页
                     $("#addModal").modal('hide');
-                    //给一个比总条数多的数字  分页插件指挥跳转到最后一页 但是不保险
-                    //to_page(999);
-                    //定义一个totalrecord  在保存/解析并显示左边分页信息 page_info(result);
-                    // 里面将总记录数拿出来 totalRecord =info.total;
                     to_page(totalRecord);
                 }else{
                     //显示校验失败信息
@@ -520,12 +516,41 @@
         getSource("#custSource_update");
         getIndustry("#custIndustry_update");
         getLevel("#custLevel_update");
-        // //弹出模态框 把员工id传递给模态框的更新按钮
-        // $("#emp_update_btn").attr("edit-id",$(this).attr("edit-id"));
+
+        //拿到这条的id 传给根据ID查询客户的方法
+        getCust($(this).attr("edit-id"));
+        //弹出模态框 把客户id传递给模态框的更新按钮
+        $("#update_btn").attr("edit-id",$(this).attr("edit-id"));
         $("#updateModal").modal({
             backdrop:"static"
         });
     });
+
+    //根据id查询客户信息
+    function getCust(id){
+        $.ajax({
+            url:"${APP_PATH}/getCustById/"+id,
+            type:"GET",
+            success:function (result) {
+                //console.log(result);
+                var data = result.map.custs;
+                console.log(data);
+                 $("#custName_update").val(data.custName);
+                $("#custSource_update").val(data.custSource);
+                $("#mobile_update").val(data.custMobile);
+                $("#custIndustry_update").val(data.custIndustry);
+                $("#email_update").val(data.custEmail);
+
+                $("#custLevel_update").val(data.custLevel);
+
+
+                //$("#custSource_update select").val([data.custSource]);
+                // $("#empUpdateModal select").val([data.dId]);
+            }
+
+        });
+    }
+
 </script>
 
 

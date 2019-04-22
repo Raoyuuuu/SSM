@@ -91,7 +91,7 @@
     //var file,data;
     var path;
     $(function(){
-        //去首页
+        //获取所有分类
         getAllItem();
 
     });
@@ -119,6 +119,7 @@
                             data : data,
                             type : "POST",
                             dataType : "json",
+                            //url:"${APP_PATH}/execUpload",
                             url : getUrl()+"/execUpload",
                             beforeSend: function (XMLHttpRequest) {
                                 XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
@@ -150,6 +151,7 @@
         $("#artCate_add_select").empty();
 
         $.ajax({
+            //url:"${APP_PATH}/getAllItem",
             url:getUrl()+"/getAllItem",
             type:"GET",
             beforeSend: function (XMLHttpRequest) {
@@ -190,8 +192,7 @@
     });
 
     //通用的获取时间方法
-    function CurentTime()
-    {
+    function CurentTime() {
         var now = new Date();
 
         var year = now.getFullYear();       //年
@@ -203,16 +204,13 @@
         var ss = now.getSeconds();           //秒
 
         var clock = year + "-";
-
         if(month < 10)
             clock += "0";
-
-        clock += month + "-";
+            clock += month + "-";
 
         if(day < 10)
             clock += "0";
-
-        clock += day + " ";
+            clock += day + " ";
 
         if(hh < 10)
             clock += "0";

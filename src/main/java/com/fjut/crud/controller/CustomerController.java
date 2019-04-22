@@ -8,10 +8,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +22,15 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+
+    @RequestMapping(value="/getCustById/{id}")
+    public Msg getCustById(@PathVariable("id") Integer id){
+        Customer customer = customerService.getCustById(id);
+        return Msg.success().add("custs",customer);
+    }
+
     /**
-     *
+     *保存客户信息
      * @param
      * @return
      */

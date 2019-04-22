@@ -6,7 +6,12 @@
     <result column="item_name" jdbcType="VARCHAR" property="itemName" />
   </resultMap>
 
+  <select id="getAllItem" resultMap="BaseResultMap">
+    select * from base_item
+  </select>
+
   <select id="getItemById" resultMap="BaseResultMap">
     select * from base_item where item_id=#{id}
   </select>
+
 </mapper>

@@ -14,10 +14,6 @@
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="${APP_PATH}/js/global.js" ></script>
     <style>
-        .modal-backdrop {
-            filter: alpha(opacity=0)!important;
-            opacity: 0!important;
-        }
         #art_table tr th{
             text-align: center;
         }
@@ -27,67 +23,6 @@
     </style>
 </head>
 <body>
-<!--新增模态框-->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addModalLabel">客户新增</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">客户姓名</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="custName" id="custName_add"  placeholder="">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">客户来源</label>
-                        <div class="col-sm-3">
-                            <!--部门提交部门id即可-->
-                            <select class="form-control" name="custSource" id="custSource_add"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">客户行业</label>
-                        <div class="col-sm-3">
-                            <!--部门提交部门id即可-->
-                            <select class="form-control" name="custIndustry" id="custIndustry_add"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">客户级别</label>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="custLevel" id="custLevel_add"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">移动电话</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="custMobile" id="mobile_add"  placeholder="">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">邮箱</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="custEmail" id="email_add"  placeholder="">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="save_btn">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--搭建显示页面-->
 <div class="container">

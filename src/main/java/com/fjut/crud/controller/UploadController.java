@@ -1,5 +1,6 @@
 package com.fjut.crud.controller;
 
+
 import com.fjut.crud.bean.BaseVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,20 +22,21 @@ import java.util.UUID;
 @RestController
 public class UploadController {
 
-    @RequestMapping("/execUploadss")
-   public BaseVo execUpload(MultipartFile file , String fileName, HttpServletRequest request) throws IOException {
-       BaseVo vo = new BaseVo();
+        @RequestMapping("/execUploadss")
+        public BaseVo execUpload(MultipartFile file , String fileName, HttpServletRequest request) throws IOException {
+        BaseVo vo = new BaseVo();
 
-       String oFileName = file.getOriginalFilename();
+        String oFileName = file.getOriginalFilename();
 
        //获取文件类型
         String fileType =oFileName.substring(oFileName.lastIndexOf("."),oFileName.length());
 
         /**
          * 获取项目webapp目录下的upload的路径
+         * E:\IdeaProjects\SSM\src\main\webapp\statics
          */
         //String prePath  = request.getSession().getServletContext().getRealPath("statics");
-        String prePath  ="E:\\IdeaProjects\\SSM\\src\\main\\webapp\\statics";
+        String prePath  ="D:\\IdeaProjects\\SSM\\src\\main\\webapp\\statics";
         System.out.println("prePath:" + prePath);
 
         /**
