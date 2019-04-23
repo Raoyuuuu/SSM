@@ -20,6 +20,13 @@
         #art_table tr td{
             text-align: center;
         }
+        .container {
+            margin: 0;
+            padding: 0;
+            width: 97%;
+            height: 100%;
+            background-color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -33,10 +40,25 @@
         </div>
     </div>
 
+    <!--搜索框-->
+    <form class="form-inline" style="margin-top:10px;margin-left: 20px ">
+        <div class="form-group">
+            <label>标题</label>
+            <input type="text" class="form-control" id="artTitle_search" placeholder="Enter Somethis....">
+        </div>
+        <div class="form-group" style="margin-left: 10px">
+            <label>分类</label>
+            <select class="form-control" name="search" id="search_select"></select>
+        </div>
+        <button type="button" class="btn btn-default">搜索</button>
+    </form>
+
+    <div style="width: 100%;height: 5px;background-color: #BDBDBD"></div>
+
     <!--按钮-->
-    <div class="row" style="margin-bottom: 20px;margin-top: 40px">
+    <div class="row" style="margin-bottom: 20px;margin-top: 20px;">
         <div class="col-md-4">
-            <button class="btn btn-info"><a href="/views/editKno.jsp" target="_self" style="text-decoration: none">新建内容</a></button>
+            <button class="btn btn-info"><a href="/views/addKno.jsp" target="_self" style="text-decoration: none">新建内容</a></button>
         </div>
     </div>
     <!--显示表格数据-->
@@ -65,7 +87,7 @@
 
         </div>
         <!--分页条-->
-        <div class="col-md-6" id="page_nav">
+        <div class="col-md-4 pull-right" id="page_nav">
 
         </div>
     </div>
@@ -78,6 +100,7 @@
 
     $(function(){
         //去首页
+        getAllItem();
         to_page(1);
     });
 
@@ -219,6 +242,58 @@
         navEle.appendTo("#page_nav");
     }
 
+    //根据id删除
+    $(document).on("click",".del_btn",function () {
+        var name = $(this).parents("tr").find("td:eq(2)").text();
+        var artId = $(this).attr("del-id");
+        if(confirm("确认删除【"+name+"】")){
+            //发送请求
+            $.ajax({
+                url:getUrl()+"/delArt/"+artId,
+                type:"DELETE",
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
+                },
+                success:function (result) {
+                    console.log(result)
+                    //回到本页
+                    to_page(currentPage);
+
+                }
+            });
+        }
+    });
+    
+    //点击编辑跳转
+    $(document).on("click",".edit_btn",function () {
+        var artId = $(this).attr("edit-id");
+        window.parent.mainFrame.location.href="/views/editKno.jsp?edit_id="+artId;
+    })
+
+    //查询所有分类信息
+    function getAllItem() {
+        //初始化
+        $("#search_select").empty();
+
+        $.ajax({
+            //url:"${APP_PATH}/getAllItem",
+            url:getUrl()+"/getAllItem",
+            type:"GET",
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
+            },
+            success:function (result) {
+                //$("#artAuthor_add").val("吴晓晓");//这边可以通过全局获取当前登录人再赋值
+                //console.log(result);
+                var cates = result.map.cates;
+                $.each(cates,function () {
+                    var options =$("<option></option>").append(this.itemName).attr("value",this.itemId);
+                    options.appendTo("#search_select");
+                });
+            }
+
+        });
+    }
 </script>
 </body>
 </html>
