@@ -27,6 +27,7 @@
             height: 100%;
             background-color: #ffffff;
         }
+
     </style>
 </head>
 <body>
@@ -48,9 +49,10 @@
         </div>
         <div class="form-group" style="margin-left: 10px">
             <label>分类</label>
-            <select class="form-control" name="search" id="search_select"></select>
+            <select class="form-control" name="search" id="search_select" style="text-align: center">
+            </select>
         </div>
-        <button type="button" class="btn btn-default">搜索</button>
+        <button type="button" class="btn btn-default" id="search">搜索</button>
     </form>
 
     <div style="width: 100%;height: 5px;background-color: #BDBDBD"></div>
@@ -285,15 +287,49 @@
             success:function (result) {
                 //$("#artAuthor_add").val("吴晓晓");//这边可以通过全局获取当前登录人再赋值
                 //console.log(result);
+                var nuoption =$("<option></option>").append("-----请选择-----").attr("value"," ").attr("selected","selected");
+                nuoption.appendTo("#search_select");
                 var cates = result.map.cates;
                 $.each(cates,function () {
+
                     var options =$("<option></option>").append(this.itemName).attr("value",this.itemId);
+
                     options.appendTo("#search_select");
                 });
+
+
             }
 
         });
     }
+
+    //条件查询
+    $("#search").click(function () {
+        var artTtile = $("#artTitle_search").val();
+        var artCate = $("#search_select").val();
+        //console.log(artTtile,artCate);
+        $.ajax({
+            url:getUrl()+"/getByArt",
+            type:"POST",
+            dataType:"json",
+            data:{
+                artTitle:artTtile,
+                artCate:artCate
+            },
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("kt-token", "r7udp5ujqrwho10buv6gbfshxua3b4b307y7eo2c0jipzno8c33u6ctfbsdv6lsxs1euqio");
+            },
+            success:function (result) {
+                console.log(result)
+                //解析并显示员工信息
+                art_table(result);
+                //解析并显示左边分页信息
+                page_info(result);
+                // //解析并显示右边分页条信息
+                page_nav(result);
+            }
+        });
+    });
 </script>
 </body>
 </html>
