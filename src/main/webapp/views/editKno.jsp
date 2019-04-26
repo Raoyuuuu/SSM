@@ -16,7 +16,7 @@
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="${APP_PATH}/static/js/summernote.min.js"></script>
     <script src="${APP_PATH}/static/js/summernote-zh-CN.js"></script>
-    <script src="${APP_PATH}/js/global.js" ></script>
+    <script src="${APP_PATH}/static/js/global.js" ></script>
     <style>
         .container{
             margin: 0;

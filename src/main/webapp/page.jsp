@@ -11,7 +11,7 @@
     %>
     <link rel="stylesheet" href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="${APP_PATH}/static/bootstrap-3.3.7-dist/assets/css/ie10-viewport-bug-workaround.css">
-    <link rel="stylesheet" href="${APP_PATH}/css/dashboard.css">
+    <link rel="stylesheet" href="${APP_PATH}/static/css/dashboard.css">
 <style>
     body{
     overflow-y: hidden;

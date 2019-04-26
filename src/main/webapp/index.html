@@ -6,7 +6,20 @@
     <script src="static/js/jquery-3.3.1.min.js"></script>
     <script src="static/layui/layui.js"></script>
 
-    <title>Title</title>
+    <title>CRM</title>
+
+    <style>
+        .demoli li{
+           padding: 0 0 0 15px;
+        }
+        .layui-nav-tree .layui-nav-item a{
+            height: 40px;
+            text-align: center;
+        }
+        .layui-layout-admin .layui-body{
+            bottom: 0;
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -30,27 +43,27 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    raoyuuuu
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
         </ul>
     </div>
 
     <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
+        <div class="layui-side-scroll aheight">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;" >所有商品</a>
+                    <a class="" href="javascript:;" >内容管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="#" data-url="register.jsp" data-title="客户管理"  data-id="11" class="site-demo-active" data-type="tabAdd" >客户管理</a></dd>
-                        <dd><a href="#" data-url="views/customer.jsp" data-title="列表二"  data-id="22" class="site-demo-active" data-type="tabAdd">列表二</a></dd>
-                        <dd><a href="views/customer.jsp" target="mainFrame">列表三</a></dd>
+                        <dd><a href="#" id="divObj" data-url="views/admin.html" data-title="控制台"  data-id="11" class="site-demo-active" data-type="tabAdd" >控制台</a></dd>
+                        <dd><a href="#" data-url="views/customer.jsp" data-title="用户管理"  data-id="22" class="site-demo-active" data-type="tabAdd">用户管理</a></dd>
+                        <dd><a href="#" data-url="views/linkman.html" data-title="联系人管理"  data-id="33" class="site-demo-active" data-type="tabAdd">联系人管理</a></dd>
                         <dd><a href="">超链接</a></dd>
                     </dl>
                 </li>
@@ -64,23 +77,32 @@
                 </li>
                 <li class="layui-nav-item"><a href="">云市场</a></li>
                 <li class="layui-nav-item"><a href="">发布商品</a></li>
+
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;" >用户</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" data-url="" data-title="网站用户"  data-id="1" class="site-demo-active" data-type="tabAdd" >网站用户</a></dd>
+                        <dd><a href="#" data-url="views/adminManager.html" data-title="管理员"  data-id="2" class="site-demo-active" data-type="tabAdd">管理员</a></dd>
+                        <dd><a href="#" data-url="" data-title="角色管理"  data-id="3" class="site-demo-active" data-type="tabAdd">角色管理</a></dd>
+                    </dl>
+                </li>
             </ul>
 
     </div>
     </div>
 
-    <div class="layui-body" style="overflow-y: hidden">
+    <div class="layui-body" style="overflow-y: hidden; ">
         <!-- 内容主体区域 -->
         <!--<iframe src="https://www.baidu.com/" frameborder="0" height="100%" width="100%"></iframe>-->
 
-        <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin: 0">
-            <ul class="layui-tab-title">
+        <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowclose="true" style="margin: 0;">
+            <ul class="layui-tab-title demoli">
             </ul>
             <ul class="rightmenu" style="display: none;position: absolute;">
                 <li data-type="closethis">关闭当前</li>
                 <li data-type="closeall">关闭所有</li>
             </ul>
-            <div class="layui-tab-content" style="padding: 0">
+            <div class="layui-tab-content" style="padding: 0px;">
             </div>
         </div>
 
@@ -88,17 +110,27 @@
 
     </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
-    </div>
+    <!--<div class="layui-footer" style="text-align: center">-->
+        <!--&lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+        <!--@raoyuuuu  2019/4/26-->
+    <!--</div>-->
 
 </div><!--last-->
 
 <script>
+
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
+
+        $(function() {
+            $("#divObj").click();
+        });
+
+        //li标签的点击事件
+        $('.layui-nav-item').click(function(){
+            $(this).siblings('li').attr('class','layui-nav-item');
+        })
 
         //触发事件
         var active = {
@@ -108,7 +140,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="auto" frameborder="0" src="http://localhost:8080/'+url+'" style="width:100%;height:100%;"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" scrolling="auto" id="iFrame1" name="iFrame1" onload="this.height=iFrame1.document.body.scrollHeight" frameborder="0" src="http://localhost:8080/'+url+'" style="width:100%;"></iframe>',
                     id: id //规定好的id
                 })
                 CustomRightClick(id); //给tab绑定右击事件
@@ -195,7 +227,7 @@
             $('.rightmenu').hide(); //最后再隐藏右键菜单
         })
         function FrameWH() {
-            var h = $(window).height() -41- 10 - 60 -10-44 -10;
+            var h = $(window).height() ;
             $("iframe").css("height",h+"px");
         }
 
