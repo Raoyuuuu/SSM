@@ -33,6 +33,27 @@
       <result column="cust_level_name" property="dictItemName" />
     </association>
   </resultMap>
+
+  <!--分页查询 条件查询-->
+  <select id="findAll"  resultType="map">
+    SELECT
+    c.`cust_id`,
+    c.`cust_name`,
+    c.`cust_mobile`,
+    c.`cust_email`,
+    s.`dict_id` `cust_source`,
+    s.`dict_item_name` `cust_source_name`,
+    i.`dict_id` `cust_industry`,
+    i.`dict_item_name` `cust_industry_name`,
+    l.`dict_id` `cust_level`,
+    l.`dict_item_name` `cust_level_name`
+    FROM
+    cst_customer c
+    LEFT JOIN base_dict s ON c.`cust_source`= s.`dict_id`
+    LEFT JOIN base_dict i ON c.`cust_industry`= i.`dict_id`
+    LEFT JOIN base_dict l ON c.`cust_level`= l.`dict_id`
+
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

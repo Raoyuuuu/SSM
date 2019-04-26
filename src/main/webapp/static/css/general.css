@@ -1,0 +1,10 @@
+html{
+    background-color: #f2f2f2;
+    color: #666;
+}
+.layui-fluid{
+    padding: 15px;
+}
+.layui-card-header {
+    border-bottom: 1px solid #ccc;
+}

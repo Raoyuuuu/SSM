@@ -52,13 +52,11 @@ public class CustomerController {
     /**
      * 分页查询所有员工信息
      */
-    @RequestMapping("/customers")
-    //有responsebody可以直接返回json字符串 需要导入Jackson依赖
-    public Msg getAll(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
-
-        PageHelper.startPage(pn,5);
-        List<Customer> cust = customerService.getAll();
-        PageInfo page = new PageInfo(cust,5);
+    @RequestMapping("/findAll")
+    public Msg findAll(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Map<String,Object>> cust = customerService.findAll(new Customer());
+        PageInfo page = new PageInfo(cust,pageSize);
         return Msg.success().add("pageInfo",page);
 
     }

@@ -1,9 +1,12 @@
 package com.fjut.crud.bean;
 
+import com.sun.javafx.beans.IDProperty;
+
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
 public class Customer {
+
     private Long custId;
 
     @Pattern(regexp = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})",message = "用户名为2-5位中文，或者3-16位英文和数字组合")
@@ -19,34 +22,6 @@ public class Customer {
 
     @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$",message = "邮箱格式错误!")
     private String custEmail;
-
-    private BaseDict baseDictSource;
-    private BaseDict baseDictIndustry;
-    private BaseDict baseDictLevel;
-
-    public BaseDict getBaseDictSource() {
-        return baseDictSource;
-    }
-
-    public void setBaseDictSource(BaseDict baseDictSource) {
-        this.baseDictSource = baseDictSource;
-    }
-
-    public BaseDict getBaseDictIndustry() {
-        return baseDictIndustry;
-    }
-
-    public void setBaseDictIndustry(BaseDict baseDictIndustry) {
-        this.baseDictIndustry = baseDictIndustry;
-    }
-
-    public BaseDict getBaseDictLevel() {
-        return baseDictLevel;
-    }
-
-    public void setBaseDictLevel(BaseDict baseDictLevel) {
-        this.baseDictLevel = baseDictLevel;
-    }
 
     public Long getCustId() {
         return custId;
