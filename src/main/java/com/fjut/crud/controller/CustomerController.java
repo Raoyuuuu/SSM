@@ -53,11 +53,10 @@ public class CustomerController {
      * 分页查询所有员工信息
      */
     @RequestMapping("/findAll")
-    public Msg findAll(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
-        PageHelper.startPage(pageNum,pageSize);
+    public Msg findAll(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "limit",defaultValue = "10") Integer limit){
+        PageHelper.startPage(page,limit);
         List<Map<String,Object>> cust = customerService.findAll(new Customer());
-        PageInfo page = new PageInfo(cust,pageSize);
-        return Msg.success().add("pageInfo",page);
-
+        PageInfo pages = new PageInfo(cust,limit);
+        return Msg.success().add("data",pages);
     }
 }

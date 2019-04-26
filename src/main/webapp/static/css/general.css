@@ -1,6 +1,7 @@
 html{
     background-color: #f2f2f2;
     color: #666;
+    overflow: auto
 }
 .layui-fluid{
     padding: 15px;
