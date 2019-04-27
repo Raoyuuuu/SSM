@@ -22,8 +22,8 @@ public class DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
 
-    public List<Department> getAllDept() {
-        List<Department> list = departmentMapper.selectByExample(null);
-        return list;
-    }
+//    public List<Department> getAllDept() {
+//        List<Department> list = departmentMapper.selectByExample(null);
+//        return list;
+//    }
 }

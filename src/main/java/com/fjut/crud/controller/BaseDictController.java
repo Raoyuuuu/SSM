@@ -15,9 +15,9 @@ public class BaseDictController {
     @Autowired
     BaseDictService baseDictService;
 
-    @RequestMapping("/getAllDict")
-    public Msg getAllDict(){
-        List<BaseDict> list = baseDictService.getAll();
-        return Msg.success().add("list",list);
-    }
+//    @RequestMapping("/getAllDict")
+//    public Msg getAllDict(){
+//        List<BaseDict> list = baseDictService.getAll();
+//        return Msg.success().add("list",list);
+//    }
 }

@@ -12,7 +12,7 @@ public class BaseDictService {
     @Autowired
     BaseDictMapper baseDictMapper;
 
-    public List<BaseDict> getAll() {
-        return baseDictMapper.selectByExample(null);
-    }
+//    public List<BaseDict> getAll() {
+//        return baseDictMapper.selectByExample(null);
+//    }
 }

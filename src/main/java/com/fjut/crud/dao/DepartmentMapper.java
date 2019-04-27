@@ -1,14 +1,8 @@
 package com.fjut.crud.dao;
 
 import com.fjut.crud.bean.Department;
-import com.fjut.crud.bean.DepartmentExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface DepartmentMapper {
-    long countByExample(DepartmentExample example);
-
-    int deleteByExample(DepartmentExample example);
 
     int deleteByPrimaryKey(Integer deptId);
 
@@ -16,13 +10,10 @@ public interface DepartmentMapper {
 
     int insertSelective(Department record);
 
-    List<Department> selectByExample(DepartmentExample example);
 
     Department selectByPrimaryKey(Integer deptId);
 
-    int updateByExampleSelective(@Param("record") Department record, @Param("example") DepartmentExample example);
 
-    int updateByExample(@Param("record") Department record, @Param("example") DepartmentExample example);
 
     int updateByPrimaryKeySelective(Department record);
 

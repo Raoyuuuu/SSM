@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/css/general.css">
 </head>
 <body>
 <div class="layui-fluid">
     <div class="layui-col-md12">
         <div class="layui-card">
-            <div class="layui-card-header">
-                客户管理
+            <div class="layui-card-header" style="height: 60px">
+                <div class="demoTable" style="padding-top: 10px">
+                    搜索客户：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                    </div>
+                    <button id="search" class="layui-btn" data-type="reload">搜索</button>
+                </div>
             </div>
             <div class="layui-card-body" >
                 <div>
-                    <button class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
+                    <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
                     <button class="layui-btn"><i class="layui-icon">&#xe640;</i> 删除</button>
                 </div>
 
@@ -34,11 +40,12 @@
 
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/layui/layui.js"></script>
+<script src="/static/js/global.js"></script>
 <script>
 
     $(function () {
         // $.ajax({
-        //     url:"/findAll",
+        //     url:"/customer/findAll",
         //     type:"POST",
         //     dataType:"json",
         //     //async:false,
@@ -48,15 +55,16 @@
         // });
     });
 
-    layui.use('table', function(){
+    layui.use(['table','layer'], function(){
         var table = layui.table;
-
+        var layer = layui.layer;
+        var $ = layui.$;
 
         //表格数据显示
         table.render({
             elem: '#demo',
             cellMinWidth: 20,
-            url: '/findAll', //数据接口
+            url: '/customer/findAll', //数据接口
             parseData: function(result){ //res 即为原始返回的数据
             return {
                 "code": result.code,
@@ -66,18 +74,46 @@
              },
             page: true,//开启分页
             cols: [[ //表头
-                 {field: 'cust_id', title: 'ID', align:'center', sort: true, fixed: 'left'}
-                ,{field: 'cust_name', title: '用户名',align:'center'}
+                 {type: 'checkbox', fixed: true}
+                ,{field: 'cust_id', title: 'ID', align:'center',unresize: true, sort: true, fixed: true}
+                ,{field: 'cust_name', title: '客户名称',align:'center'}
                 ,{field: 'cust_source_name', title: '来源',align:'center', sort: true}
-                ,{field: 'cust_industry_name', title: '行业',align:'center'}
-                ,{field: 'cust_level_name', title: '级别',align:'center'}
-                ,{field: 'cust_mobile', title: '电话',align:'center', sort: true}
-                ,{field: 'cust_email', title: '邮箱', align:'center',sort: true}
+                ,{field: 'cust_industry_name', title: '行业',align:'center', sort: true}
+                ,{field: 'cust_level_name', title: '级别',align:'center',sort: true}
+                ,{field: 'cust_mobile', title: '电话',align:'center'}
+                ,{field: 'cust_email', title: '邮箱', align:'center'}
                 ,{field:'right', title: '操作',align:'center',toolbar:"#barDemo"}
             ]]
         });
 
+        //搜索
+        $('#search').on('click', function(){
+            var demoReload = $('#demoReload');
+            //执行重载
+            table.reload('demo', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                        cust_name: demoReload.val()
+                }
+            });
+        });
+
+
+        //新增
+        $("#addBtn").click(function () {
+            layer.open({
+                title: '客户添加',
+                type: 2,
+                area: ['800px','600px'],
+
+                content: getUrl()+'layui/customer/add.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            });
+        });
     });
+
+
 
 </script>
 </body>

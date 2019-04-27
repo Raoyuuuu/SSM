@@ -25,11 +25,11 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    //获取返回所有部门信息
-    @RequestMapping("/depts")
-    @ResponseBody
-    public Msg getAllDept(){
-        List<Department> list = departmentService.getAllDept();
-        return Msg.success().add("depts", list);
-    }
+//    //获取返回所有部门信息
+//    @RequestMapping("/depts")
+//    @ResponseBody
+//    public Msg getAllDept(){
+//        List<Department> list = departmentService.getAllDept();
+//        return Msg.success().add("depts", list);
+//    }
 }

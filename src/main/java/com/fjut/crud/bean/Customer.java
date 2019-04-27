@@ -1,81 +1,81 @@
 package com.fjut.crud.bean;
 
-import com.sun.javafx.beans.IDProperty;
 
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 public class Customer {
 
-    private Long custId;
+    private Long cust_id;
 
     @Pattern(regexp = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})",message = "用户名为2-5位中文，或者3-16位英文和数字组合")
-    private String custName;
+    private String cust_name;
 
-    private String custSource;
+    private String cust_source;
 
-    private String custIndustry;
+    private String cust_industry;
 
-    private String custLevel;
+    private String cust_level;
 
-    private String custMobile;
+    private String cust_mobile;
 
     @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$",message = "邮箱格式错误!")
-    private String custEmail;
+    private String cust_email;
 
-    public Long getCustId() {
-        return custId;
+
+
+    public Long getCust_id() {
+        return cust_id;
     }
 
-    public void setCustId(Long custId) {
-        this.custId = custId;
+    public void setCust_id(Long cust_id) {
+        this.cust_id = cust_id;
     }
 
-    public String getCustName() {
-        return custName;
+    public String getCust_name() {
+        return cust_name;
     }
 
-    public void setCustName(String custName) {
-        this.custName = custName == null ? null : custName.trim();
+    public void setCust_name(String cust_name) {
+        this.cust_name = cust_name;
     }
 
-    public String getCustSource() {
-        return custSource;
+    public String getCust_source() {
+        return cust_source;
     }
 
-    public void setCustSource(String custSource) {
-        this.custSource = custSource == null ? null : custSource.trim();
+    public void setCust_source(String cust_source) {
+        this.cust_source = cust_source;
     }
 
-    public String getCustIndustry() {
-        return custIndustry;
+    public String getCust_industry() {
+        return cust_industry;
     }
 
-    public void setCustIndustry(String custIndustry) {
-        this.custIndustry = custIndustry == null ? null : custIndustry.trim();
+    public void setCust_industry(String cust_industry) {
+        this.cust_industry = cust_industry;
     }
 
-    public String getCustLevel() {
-        return custLevel;
+    public String getCust_level() {
+        return cust_level;
     }
 
-    public void setCustLevel(String custLevel) {
-        this.custLevel = custLevel == null ? null : custLevel.trim();
+    public void setCust_level(String cust_level) {
+        this.cust_level = cust_level;
     }
 
-    public String getCustMobile() {
-        return custMobile;
+    public String getCust_mobile() {
+        return cust_mobile;
     }
 
-    public void setCustMobile(String custMobile) {
-        this.custMobile = custMobile == null ? null : custMobile.trim();
+    public void setCust_mobile(String cust_mobile) {
+        this.cust_mobile = cust_mobile;
     }
 
-    public String getCustEmail() {
-        return custEmail;
+    public String getCust_email() {
+        return cust_email;
     }
 
-    public void setCustEmail(String custEmail) {
-        this.custEmail = custEmail == null ? null : custEmail.trim();
+    public void setCust_email(String cust_email) {
+        this.cust_email = cust_email;
     }
 }

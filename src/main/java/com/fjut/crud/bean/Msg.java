@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class Msg {
 
-    //状态码  0-成功  200-失败
+    //状态码  0-成功  1-失败
     private int code;
     //提示信息（成功 失败）
     private String msg;
@@ -19,14 +19,14 @@ public class Msg {
     public static Msg success(){
         Msg result = new Msg();
         result.setCode(0);
-        result.setMsg("成功!");
+        result.setMsg("操作成功!");
         return result;
     }
 
     public static Msg fail(){
         Msg result = new Msg();
-        result.setCode(200);
-        result.setMsg("失败!");
+        result.setCode(1);
+        result.setMsg("操作失败!");
         return result;
     }
 
