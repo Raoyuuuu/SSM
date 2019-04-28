@@ -22,7 +22,7 @@
             <div class="layui-card-body" >
                 <div>
                     <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
-                    <button class="layui-btn"><i class="layui-icon">&#xe640;</i> 删除</button>
+                    <button class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe640;</i> 删除</button>
                 </div>
 
                 <table class="layui-hide" id="demo" lay-filter="test" ></table>
@@ -60,6 +60,8 @@
         var layer = layui.layer;
         var $ = layui.$;
 
+
+
         //表格数据显示
         table.render({
             elem: '#demo',
@@ -79,9 +81,13 @@
                 ,{field: 'cust_name', title: '客户名称',align:'center'}
                 ,{field: 'cust_source_name', title: '来源',align:'center', sort: true}
                 ,{field: 'cust_industry_name', title: '行业',align:'center', sort: true}
-                ,{field: 'cust_level_name', title: '级别',align:'center',sort: true}
-                ,{field: 'cust_mobile', title: '电话',align:'center'}
-                ,{field: 'cust_email', title: '邮箱', align:'center'}
+                ,{field: 'cust_type_name', title: '类型',align:'center',sort: true}
+                ,{field: 'cust_phone', title: '电话',align:'center'}
+                ,{field: 'cust_create_time', title: '录入时间', align:'center',
+                    templet :function (data){
+                        return cust_create_time(data.cust_create_time);
+                    }
+                }
                 ,{field:'right', title: '操作',align:'center',toolbar:"#barDemo"}
             ]]
         });
@@ -106,13 +112,29 @@
             layer.open({
                 title: '客户添加',
                 type: 2,
-                area: ['800px','600px'],
+                area: ['800px','500px'],
 
                 content: getUrl()+'layui/customer/add.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
             });
         });
     });
 
+
+    //时间戳转换
+    function cust_create_time(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M;
+        return str;
+    }
 
 
 </script>

@@ -35,6 +35,8 @@ public interface CustomerMapper {
     //客户分页查询 条件查询
     List<Map<String,Object>> findAll(Customer customer);
 
+    void save(Customer customer);
+
     //List<Customer> findAll(Customer customer);
 
     //客户保存

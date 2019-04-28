@@ -63,11 +63,11 @@ public class CustomerController {
     }
 
 
-    //@RequestMapping("/save")
-//    public Msg save(Customer customer){
-//        customerService.save(customer);
-//        return Msg.success();
-//    }
+    @RequestMapping("/save")
+    public Msg save(Customer customer){
+        customerService.save(customer);
+        return Msg.success();
+    }
 
 //    /**
 //     * 分页查询所有员工信息 用这种方式不好返回

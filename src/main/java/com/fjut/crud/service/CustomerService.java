@@ -32,6 +32,10 @@ public class CustomerService {
         return customerMapper.findAll(customer);
     }
 
+    public void save(Customer customer) {
+        customerMapper.save(customer);
+    }
+
 //        public List<Customer> findAll(Customer customer){
 //                return customerMapper.findAll(customer);
 //        }

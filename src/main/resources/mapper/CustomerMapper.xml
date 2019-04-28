@@ -3,24 +3,28 @@
 <mapper namespace="com.fjut.crud.dao.CustomerMapper">
 
 
+  <sql id="base">
+    cust_id,cust_name,cust_phone,cust_create_time,cust_source,cust_industry,cust_type
+  </sql>
+
   <!--分页查询 条件查询-->
   <select id="findAll"  resultType="map">
     SELECT
     c.`cust_id`,
     c.`cust_name`,
-    c.`cust_mobile`,
-    c.`cust_email`,
+    c.`cust_phone`,
+    c.`cust_create_time`,
     s.`dict_id` `cust_source`,
     s.`dict_item_name` `cust_source_name`,
     i.`dict_id` `cust_industry`,
     i.`dict_item_name` `cust_industry_name`,
-    l.`dict_id` `cust_level`,
-    l.`dict_item_name` `cust_level_name`
+    l.`dict_id` `cust_type`,
+    l.`dict_item_name` `cust_type_name`
     FROM
-    cst_customer c
+    customer c
     LEFT JOIN base_dict s ON c.`cust_source`= s.`dict_id`
     LEFT JOIN base_dict i ON c.`cust_industry`= i.`dict_id`
-    LEFT JOIN base_dict l ON c.`cust_level`= l.`dict_id`
+    LEFT JOIN base_dict l ON c.`cust_type`= l.`dict_id`
     <where>
       <if test="cust_name!=null and cust_name!=''">
         and c.`cust_name` like '%${cust_name}%'
@@ -28,5 +32,10 @@
     </where>
   </select>
 
+  <!--新增客户-->
+  <insert id="save" parameterType="com.fjut.crud.bean.Customer">
+     insert into customer(cust_id,cust_name,cust_phone,cust_create_time,cust_source,cust_industry,cust_type)
+     values(#{cust_id},#{cust_name},#{cust_phone},#{cust_create_time},#{cust_source},#{cust_industry},#{cust_type})
+  </insert>
 
 </mapper>

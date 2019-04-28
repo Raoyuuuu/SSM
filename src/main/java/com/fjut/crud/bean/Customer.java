@@ -1,25 +1,29 @@
 package com.fjut.crud.bean;
 
 
-import javax.validation.constraints.Pattern;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 public class Customer {
 
     private Long cust_id;
 
-    @Pattern(regexp = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})",message = "用户名为2-5位中文，或者3-16位英文和数字组合")
+    //@Pattern(regexp = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})",message = "用户名为2-5位中文，或者3-16位英文和数字组合")
     private String cust_name;
 
     private String cust_source;
 
     private String cust_industry;
 
-    private String cust_level;
+    private String cust_type;
 
-    private String cust_mobile;
+    private String cust_phone;
 
-    @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$",message = "邮箱格式错误!")
-    private String cust_email;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private String cust_create_time;
 
 
 
@@ -55,27 +59,27 @@ public class Customer {
         this.cust_industry = cust_industry;
     }
 
-    public String getCust_level() {
-        return cust_level;
+    public String getCust_type() {
+        return cust_type;
     }
 
-    public void setCust_level(String cust_level) {
-        this.cust_level = cust_level;
+    public void setCust_type(String cust_type) {
+        this.cust_type = cust_type;
     }
 
-    public String getCust_mobile() {
-        return cust_mobile;
+    public String getCust_phone() {
+        return cust_phone;
     }
 
-    public void setCust_mobile(String cust_mobile) {
-        this.cust_mobile = cust_mobile;
+    public void setCust_phone(String cust_phone) {
+        this.cust_phone = cust_phone;
     }
 
-    public String getCust_email() {
-        return cust_email;
+    public String getCust_create_time() {
+        return cust_create_time;
     }
 
-    public void setCust_email(String cust_email) {
-        this.cust_email = cust_email;
+    public void setCust_create_time(String cust_create_time) {
+        this.cust_create_time = cust_create_time;
     }
 }
