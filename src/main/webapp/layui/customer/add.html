@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css">
 </head>
 <body>
-<form class="layui-form" action="">
+<form class="layui-form">
     <div class="layui-form-item">
         <label class="layui-form-label">客户名称</label>
         <div class="layui-input-block">
@@ -82,7 +82,6 @@
         var cust_create_time = CurentTime();
         //监听提交
         form.on('submit(formDemo)', function(data){
-            //var field = JSON.stringify();
             //layer.msg(JSON.stringify(data.field));
             //return false;
 
@@ -102,13 +101,15 @@
                 success:function(result){
                     layer.msg(result.msg, {
                         icon: 1,
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
                     }, function(){
-                       window.parent.location.reload();
+                       parent.window.location.reload();
                     });
                 }
             })
+            return false
         });
+
     });
     //通用的获取时间方法
     function CurentTime() {
