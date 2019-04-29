@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Customer {
 
+
     private Long cust_id;
 
     //@Pattern(regexp = "(^[a-z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})",message = "用户名为2-5位中文，或者3-16位英文和数字组合")
@@ -24,7 +25,6 @@ public class Customer {
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private String cust_create_time;
-
 
 
     public Long getCust_id() {

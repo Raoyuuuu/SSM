@@ -38,4 +38,36 @@
      values(#{cust_id},#{cust_name},#{cust_phone},#{cust_create_time},#{cust_source},#{cust_industry},#{cust_type})
   </insert>
 
+  <!--删除客户-->
+  <delete id="delete" parameterType="Integer">
+    delete from  customer where cust_id =#{id}
+  </delete>
+
+  <!--更新客户-->
+  <update id="update" parameterType="com.fjut.crud.bean.Customer">
+    update customer
+      <set>
+      <if test="cust_name!=null">
+        cust_name = #{cust_name},
+      </if>
+      <if test="cust_source!=null">
+        cust_source = #{cust_source},
+      </if>
+      <if test="cust_industry!=null">
+        cust_industry = #{cust_industry},
+      </if>
+      <if test="cust_type!=null">
+        cust_type = #{cust_type},
+      </if>
+      <if test="cust_phone!=null">
+        cust_phone = #{cust_phone},
+      </if>
+      <if test="cust_create_time!=null">
+        cust_create_time = #{cust_create_time}
+      </if>
+
+      </set>
+    WHERE cust_id = #{cust_id}
+  </update>
+
 </mapper>

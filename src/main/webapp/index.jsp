@@ -504,6 +504,7 @@
                 $("#email_update").val(data.email);
                 $("#empUpdateModal input[name=gender]").val([data.gender]);
                 $("#empUpdateModal select").val([data.dId]);
+
             }
 
         });

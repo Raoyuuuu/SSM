@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class CustomerController {
 //        }
 //     }
     /**
-     * 分页查询所有员工信息
+     * 分页查询条件查询
      */
     @RequestMapping("/findAll")
     public Msg findAll(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "limit",defaultValue = "10") Integer limit,Customer customer){
@@ -63,9 +64,43 @@ public class CustomerController {
     }
 
 
+    /**
+     *
+     * @auther: raohuarong
+     * @param:
+     * @return:
+     * @date: 2019/4/29 9:20
+     * @description: 保存客户
+     */
     @RequestMapping("/save")
     public Msg save(Customer customer){
         customerService.save(customer);
+        return Msg.success();
+    }
+    /**
+     *
+     * @auther: raohuarong
+     * @param:
+     * @return:
+     * @date: 2019/4/29 14:11
+     * @description: 删除客户
+     */
+    @RequestMapping("/delete")
+    public Msg delete(Integer id){
+        customerService.delete(id);
+        return Msg.success();
+    }
+    /**
+     *
+     * @auther: raohuarong
+     * @param:
+     * @return:
+     * @date: 2019/4/29 14:12
+     * @description: 更新用户
+     */
+    @RequestMapping("/update")
+    public Msg update(Customer customer){
+        customerService.update(customer);
         return Msg.success();
     }
 

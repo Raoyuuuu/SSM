@@ -22,7 +22,7 @@
             <div class="layui-card-body" >
                 <div>
                     <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
-                    <button class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe640;</i> 删除</button>
+                    <button class="layui-btn layui-btn-danger" data-type="getCheckData" id="deletList"><i class="layui-icon">&#xe640;</i>批量删除</button>
                 </div>
 
                 <table class="layui-hide" id="demo" lay-filter="test" ></table>
@@ -37,7 +37,78 @@
         </div>
     </div>
 </div>
+<!--编辑表单  隐藏-->
+<div class="layui-row" id="updateForm" style="display:none;margin:40px 30px 0 0">
+    <form class="layui-form" id="update_form">
+        <div class="layui-form-item" style="display:none;width: 0;height: 0">
+            <label class="layui-form-label">客户ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="cust_id" id="cust_id" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="cust_name" id="cust_name" required  lay-verify="required" placeholder="请输入客户名称" autocomplete="new-text" class="layui-input">
+            </div>
+        </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">来源</label>
+            <div class="layui-input-block">
+                <select name="cust_source" id="cust_source" lay-verify="required">
+                    <option value=""></option>
+                    <option value="6">电话营销</option>
+                    <option value="7">网络营销</option>
+                    <option value="35">活动推广</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">行业</label>
+            <div class="layui-input-block">
+                <select name="cust_industry" id="cust_industry" lay-verify="required">
+                    <option value=""></option>
+                    <option value="1">教育培训</option>
+                    <option value="2">电子商务</option>
+                    <option value="3">对外贸易</option>
+                    <option value="4">酒店旅游</option>
+                    <option value="5">房地产</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item" >
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="cust_type" id="cust_type" lay-verify="required">
+                    <option value=""></option>
+                    <option value="18">基础客户</option>
+                    <option value="19">潜在客户</option>
+                    <option value="20">成功客户</option>
+                    <option value="21">失效客户</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" id="cust_phone" name="cust_phone" required  lay-verify="required" placeholder="phone"  class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="updateBtn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/layui/layui.js"></script>
 <script src="/static/js/global.js"></script>
@@ -55,9 +126,10 @@
         // });
     });
 
-    layui.use(['table','layer'], function(){
+    layui.use(['table','layer','form'], function(){
         var table = layui.table;
         var layer = layui.layer;
+        var form = layui.form;
         var $ = layui.$;
 
 
@@ -65,7 +137,7 @@
         //表格数据显示
         table.render({
             elem: '#demo',
-            cellMinWidth: 20,
+            //cellMinWidth: 20,
             url: '/customer/findAll', //数据接口
             parseData: function(result){ //res 即为原始返回的数据
             return {
@@ -112,12 +184,111 @@
             layer.open({
                 title: '客户添加',
                 type: 2,
-                area: ['800px','500px'],
+                area: ['30%','60%'],
 
                 content: getUrl()+'layui/customer/add.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
             });
         });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            id = obj.data.cust_id;
+            //删除
+            if(layEvent === 'del'){
+                var id = obj.data.cust_id;
+                layer.confirm('真的删除行么', function(index){
+
+                    $.ajax({
+                       url:"/customer/delete",
+                       dataType:"json",
+                       data:{
+                           id:id
+                       },
+                       success:function (result) {
+                           if(result.code===0){
+                               layer.msg(result.msg, {
+                                   icon: 1,
+                                   time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                               }, function(){
+                                   obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                   layer.close(index);
+                               });
+                           }
+                           else{
+                               layer.msg('操作失败', {
+                                   icon: 1,
+                                   time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                               }, function(){
+                                   parent.window.location.reload();
+                               });
+                           }
+                       }
+                    });
+
+                });
+            }
+            else if(layEvent === 'edit'){ //编辑
+                layer.open({
+                    title: '客户修改',
+                    type: 1,
+                    area: ['30%','60%'],
+                    content : $('#updateForm'),
+                    success : function(layero, index) {
+                        // layer.iframeAuto(index);
+                        // console.log(data)
+                        $('#cust_id').val(data.cust_id);
+                        $('#cust_name').val(data.cust_name);   //回显的操作最重要的一步就是这个啦，其他的也是差不多的
+                        $('#cust_phone').val(data.cust_phone);
+                        $("#cust_source").val(data.cust_source);
+                        $("#cust_industry").val(data.cust_industry);
+                        $("#cust_type").val(data.cust_type);
+
+                        form.render('select');
+                    }
+                });
+                //同步更新缓存对应的值
+                // obj.update({
+                //     username: '123'
+                //     ,title: 'xxx'
+                // });
+            }
+        });
+
+        //编辑保存
+        form.on('submit(formDemo)', function(data){
+            //console.log(JSON.stringify(data.field));
+            $.ajax({
+                url:'/customer/update',
+                type:"POST",
+                dataType:"json",
+                data:data.field,
+                success:function (result) {
+                    console.log(result);
+                    if(result.code===0){
+                        layer.msg(result.msg, {
+                            icon: 1,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                           parent.window.location.reload();
+                        });
+                    }
+                    else{
+                        alert("操作失败");
+                    }
+                }
+            });
+
+        });
+
+        $("#deletList").click(function () {
+                layer.msg('此功能暂未开通');
+        });
     });
+
+
 
 
     //时间戳转换
