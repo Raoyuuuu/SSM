@@ -89,7 +89,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" style="margin-left: 40%" id="update"  lay-submit lay-filter="formDemo">更新</button>
+                <button class="layui-btn" style="margin-left:40%" id="update"  lay-submit lay-filter="formDemo">更新</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -121,6 +121,33 @@
         var form = layui.form;
         var $ = layui.$;
         var layedit = layui.layedit;
+
+        //富文本编辑器
+        layedit.set({
+            uploadImage: {//图片上传
+                url: '/uploadFile' //接口url
+                ,type: 'POST' //默认post
+            }
+        });
+        var index = layedit.build('artContent',{
+            tool: [
+                'strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
+
+                ,'|' //分割线
+
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'link' //超链接
+                ,'unlink' //清除链接
+                ,'face'
+                ,'image' //插入图片
+                ,'help' //帮助
+            ]
+        });
 
         //表格数据显示
         table.render({
@@ -179,32 +206,6 @@
             });
         });
 
-        //富文本编辑器
-        layedit.set({
-            uploadImage: {//图片上传
-                url: '/uploadFile' //接口url
-                ,type: 'POST' //默认post
-            }
-        });
-        var index = layedit.build('artContent',{
-            tool: [
-                'strong' //加粗
-                ,'italic' //斜体
-                ,'underline' //下划线
-                ,'del' //删除线
-
-                ,'|' //分割线
-
-                ,'left' //左对齐
-                ,'center' //居中对齐
-                ,'right' //右对齐
-                ,'link' //超链接
-                ,'unlink' //清除链接
-                ,'face'
-                ,'image' //插入图片
-                ,'help' //帮助
-            ]
-        });
 
         //监听工具条
         table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -284,30 +285,25 @@
 
         //编辑保存
         form.on('submit(formDemo)',function(data){
-            console.log(JSON.stringify(data.field));
-            var artId = data.field.artId;
-            var artTitle = data.field.artTitle;
-            var artCate = data.field.artCate;
-            var artAuthor = data.field.artAuthor;
+            //console.log(JSON.stringify(data.field));
             var artContent = layedit.getContent(index);
-            var updatetime = CurentTime();
-            console.log(artId+"--"+artTitle+"--"+artCate+"--"+artAuthor+"--"+updatetime);
-            console.log(artContent);
+            var time = CurentTime();
+            //console.log(artContent);
             $.ajax({
-                url:getUrl()+'/knowledge/update',
+                url:"/knowledge/update",
                 type:"POST",
                 dataType:"json",
-                async:false,
                 data:{
-                     artId:artId,
-                     artCate:artCate,
-                     artTitle:artTitle,
-                     artAuthor:artAuthor,
-                     artContent:artContent,
-                     artUpdateTime:updatetime
+                    artId:data.field.artId,
+                    artCate:data.field.artCate,
+                    artTitle:data.field.artTitle,
+                    artContent:artContent,
+                    artAuthor:data.field.artAuthor,
+
+                    artUpdateTime:time
                 },
                 success:function (result) {
-                    console.log(result);
+
                     if(result.code===0){
                         layer.msg(result.msg, {
                             icon: 1,

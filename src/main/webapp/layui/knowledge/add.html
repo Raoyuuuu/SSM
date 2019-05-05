@@ -53,11 +53,8 @@
     </form>
 
 
-
-
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/layui/layui.js"></script>
-<script src="/static/js/global.js"></script>
 <script>
 
     layui.use(['form','layer','layedit'], function(){
@@ -65,6 +62,7 @@
         var layer = layui.layer;
         var layedit = layui.layedit;
         var $ = layui.$;
+        var time = CurentTime();
 
         //富文本编辑器
         layedit.set({
@@ -93,12 +91,11 @@
             ]
         });
 
-
         //$("#addArtForm").click(function () {
+
         form.on('submit(addArt)', function(data){
             console.log(data.field);
             var artContent = layedit.getContent(index);
-            var time = CurentTime();
             //console.log(artContent);
             $.ajax({
                 url:"/knowledge/save",
@@ -121,7 +118,7 @@
                     });
                 }
             });
-            return false
+            return false;
     });
 
     });
