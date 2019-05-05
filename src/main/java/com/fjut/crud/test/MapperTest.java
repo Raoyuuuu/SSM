@@ -1,8 +1,7 @@
 package com.fjut.crud.test;
 
 
-import com.fjut.crud.bean.BaseArticle;
-import com.fjut.crud.bean.BaseItem;
+import com.fjut.crud.bean.Knowledge;
 import com.fjut.crud.dao.*;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -12,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -29,13 +27,13 @@ public class MapperTest {
     @Autowired
     BaseItemMapper baseItemMapper;
     @Autowired
-    BaseArticleMapper baseArticleMapper;
+    KnowledgeMapper baseArticleMapper;
 
     @Test
         public  void testCURD(){
 
-        List<BaseArticle> articles = baseArticleMapper.getArtWithItem();
-        System.out.println(articles);
+        //List<Knowledge> articles = baseArticleMapper.getArtWithItem();
+        //System.out.println(articles);
 //        BaseItem baseItem = baseItemMapper.getItemById(1);
 //        System.out.println(baseItem);
 

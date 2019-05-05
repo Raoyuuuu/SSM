@@ -249,11 +249,6 @@
                         form.render('select');
                     }
                 });
-                //同步更新缓存对应的值
-                // obj.update({
-                //     username: '123'
-                //     ,title: 'xxx'
-                // });
             }
         });
 
@@ -265,6 +260,7 @@
                 type:"POST",
                 dataType:"json",
                 data:data.field,
+                async:false,
                 success:function (result) {
                     console.log(result);
                     if(result.code===0){
@@ -272,7 +268,7 @@
                             icon: 1,
                             time: 1000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
-                           parent.window.location.reload();
+                           window.location.reload();
                         });
                     }
                     else{
@@ -280,9 +276,10 @@
                     }
                 }
             });
-
+            return false;
         });
 
+        //批量删除
         $("#deletList").click(function () {
                 layer.msg('此功能暂未开通');
         });

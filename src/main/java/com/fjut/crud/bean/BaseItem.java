@@ -1,27 +1,18 @@
 package com.fjut.crud.bean;
 
-import java.util.List;
 
 public class BaseItem {
-    private Integer itemId;
+    private String itemId;
 
     private String itemName;
 
-    private List<BaseArticle> baseArticles;
+    private String itemCode;
 
-    public List<BaseArticle> getBaseArticles() {
-        return baseArticles;
-    }
-
-    public void setBaseArticles(List<BaseArticle> baseArticles) {
-        this.baseArticles = baseArticles;
-    }
-
-    public Integer getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(Integer itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
@@ -30,14 +21,14 @@ public class BaseItem {
     }
 
     public void setItemName(String itemName) {
-        this.itemName = itemName == null ? null : itemName.trim();
+        this.itemName = itemName;
     }
 
-    @Override
-    public String toString() {
-        return "BaseItem{" +
-                "itemId=" + itemId +
-                ", itemName='" + itemName + '\'' +
-                '}';
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 }

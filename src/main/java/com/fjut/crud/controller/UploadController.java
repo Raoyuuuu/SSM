@@ -35,6 +35,7 @@ public class UploadController {
          * 获取项目webapp目录下的upload的路径
          * E:\IdeaProjects\SSM\src\main\webapp\statics
          */
+        //String prePath  = request.getSession().getServletContext().getRealPath("/")+"\\+upload+\\";
         //String prePath  = request.getSession().getServletContext().getRealPath("statics");
         String prePath  ="D:\\IdeaProjects\\SSM\\src\\main\\webapp\\statics";
         System.out.println("prePath:" + prePath);

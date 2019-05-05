@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.KnowledgeMapper">
+  <resultMap id="BaseMap" type="com.fjut.crud.bean.Knowledge">
+    <id column="art_id" jdbcType="INTEGER" property="artId" />
+    <result column="art_cate" jdbcType="VARCHAR" property="artCate" />
+    <result column="art_title" jdbcType="VARCHAR" property="artTitle" />
+    <result column="art_content" jdbcType="VARCHAR" property="artContent" />
+    <result column="art_author" jdbcType="VARCHAR" property="artAuthor" />
+    <result column="art_create_time" jdbcType="TIMESTAMP" property="artCreateTime" />
+    <result column="art_update_time" jdbcType="TIMESTAMP" property="artUpdateTime" />
+  </resultMap>
+
+    <!--分页查询 条件查询-->
+    <select id="findAll" resultType="map">
+          SELECT
+          k.`art_id` as artId,
+          k.`art_cate` as artCate,
+          k.`art_title` as artTitle,
+          k.`art_content` as artContent,
+          k.`art_author` as artAuthor,
+          k.`art_create_time` as artCreateTime,
+          k.`art_update_time` as artUpdateTime,
+          b.`item_id` as itemId,
+          b.`item_name` as itemName
+          FROM
+          `knowledge` k
+          LEFT JOIN `base_item` b ON k.`art_cate` = b.`item_id`
+          <where>
+              <if test="artTitle!=null and artTitle!=''">
+                  <!--'%"#{artTitle}"%'-->
+                  and k.`art_title` like '%${artTitle}%'
+              </if>
+              <if test="artCate!=null and artCate!=''">
+                  and k.`art_cate`=#{artCate}
+              </if>
+          </where>
+  </select>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.fjut.crud.bean.Knowledge">
+        insert into knowledge(art_id,art_cate,art_title,art_author,art_content,art_create_time,art_update_time)
+        values (#{artId},#{artCate},#{artTitle},#{artAuthor},#{artContent},#{artCreateTime},#{artUpdateTime})
+    </insert>
+
+    <!--删除-->
+    <delete id="delete" parameterType="Integer">
+        delete from knowledge where art_id =#{id}
+    </delete>
+
+    <update id="update" parameterType="com.fjut.crud.bean.Knowledge">
+        update knowledge
+        <set>
+            <if test="artCate!=null">
+                art_cate = #{artCate},
+            </if>
+            <if test="artTitle!=null">
+                art_title = #{artTitle},
+            </if>
+            <if test="artAuthor!=null">
+                art_author = #{artAuthor},
+            </if>
+            <if test="artContent!=null">
+                art_content = #{artContent},
+            </if>
+            <if test="artCreateTime!=null">
+                art_create_time = #{artCreateTime},
+            </if>
+            <if test="artUpdateTime!=null">
+                art_update_time = #{artUpdateTime}
+            </if>
+        </set>
+        WHERE art_id = #{artId}
+    </update>
+
+</mapper>
