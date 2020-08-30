@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.LinkmanMapper">
+
+
+
+    <!--查询-->
+    <select id="findById" resultType="com.fjut.crud.bean.Linkman">
+        select
+        *
+        from linkman
+        where cust_no = #{ids}
+
+    </select>
+
+    <!--分页查询 条件查询-->
+    <select id="findAll"  resultType="map">
+        SELECT
+        l.`id`,
+        l.`cust_no`,
+        l.`name`,
+        l.`sex`,
+        l.`position`,
+        l.`telephone`,
+        l.`wechat`,
+        l.`qq`,
+        l.`create_time`,
+        l.`remark` ,
+        l.`operator`,
+        c.`cust_name`
+        FROM
+        `linkman` l
+        LEFT JOIN `customer` c ON c.`cust_id`= l.`cust_no`
+        <where>
+            <if test="name!=null and name!=''">
+                and l.`name` like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <!--新增-->
+    <insert id="save" parameterType="com.fjut.crud.bean.Linkman">
+     insert into linkman(id,cust_no,name,sex,position,telephone,wechat,create_time,remark,operator)
+     values(#{id},#{custNo},#{name},#{sex},#{position},#{telephone},#{wechat},#{createTime},#{remark},#{operator})
+  </insert>
+
+    <!--删除-->
+    <delete id="delete" parameterType="Integer">
+    delete from  linkman where id =#{id}
+  </delete>
+
+    <!--更新-->
+    <update id="update" parameterType="com.fjut.crud.bean.Linkman">
+        update linkman
+        <set>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="sex!=null">
+                sex = #{sex},
+            </if>
+            <if test="custNo!=null">
+                cust_no = #{custNo},
+            </if>
+            <if test="position!=null">
+                position = #{position},
+            </if>
+            <if test="telephone!=null">
+                telephone = #{telephone},
+            </if>
+            <if test="wechat!=null">
+                wechat = #{wechat},
+            </if>
+            <if test="qq!=null">
+                qq = #{qq},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+            <if test="remark!=null">
+                remark = #{remark},
+            </if>
+            <if test="operator!=null">
+                operator = #{operator}
+            </if>
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

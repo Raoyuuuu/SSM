@@ -24,11 +24,33 @@
     <!--=================== 数据源，事务控制，xxx ================-->
     <!--引入外部文件-->
     <context:property-placeholder location="classpath:jdbc.properties" />
-    <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-    <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-    <property name="driverClass" value="${jdbc.driverClass}" />
-    <property name="user" value="${jdbc.user}" />
-    <property name="password" value="${jdbc.password}" />
+    <!--<bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+    <!--<property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>-->
+    <!--<property name="driverClass" value="${jdbc.driverClass}" />-->
+    <!--<property name="user" value="${jdbc.user}" />-->
+    <!--<property name="password" value="${jdbc.password}" />-->
+    <!--</bean>-->
+
+    <bean id="pooledDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClass}" />
+        <property name="url" value="${jdbc.jdbcUrl}" />
+        <property name="username" value="${jdbc.user}" />
+        <property name="password" value="${jdbc.password}" />
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="5" />
+        <!-- 最大连接数 -->
+        <property name="maxActive" value="100" />
+        <!-- 最小连接数 -->
+        <property name="minIdle" value="5" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="120000" />
+        <!-- 超过时间限制是否回收 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 超过时间限制多长 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 添加此处作用是为了在SQL监控页面显示sql执行语句，不配置不显示 -->
+        <property name="filters" value="stat" />
     </bean>
 
     <!-- ===================配置和Mybatis的整合==================== -->
@@ -47,6 +69,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--扫描所有dao接口的实现，加入到ioc容器中 -->
         <property name="basePackage" value="com.fjut.crud.dao" />
+        <!--<property name="sqlSessionFactoryBeanName" value="SqlSessionFactory" />-->
     </bean>
 
     <!--配置一个可以执行批量生成的sqlsession-->
@@ -61,6 +84,8 @@
         <!--控制住数据源  -->
         <property name="dataSource" ref="pooledDataSource" />
     </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <!--开启基于注解的事务，使用xml配置形式的事务（必要主要的都是使用配置式）  -->
     <aop:config>

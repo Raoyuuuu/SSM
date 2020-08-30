@@ -14,19 +14,6 @@ public class CustomerService {
     @Autowired
     CustomerMapper customerMapper;
 
-//    public List<Customer> getAll() {
-//        return customerMapper.selectByExampleWithDase(null);
-//    }
-
-//
-//    public void save(Customer customer) {
-//        customerMapper.insertSelective(customer);
-//    }
-//
-//    public Customer getCustById(Integer id) {
-//        Customer customer = customerMapper.selectByPrimaryKey(Long.valueOf(id));
-//        return customer;
-//    }
 
     public List<Map<String,Object>> findAll(Customer customer) {
         return customerMapper.findAll(customer);
@@ -44,9 +31,8 @@ public class CustomerService {
         customerMapper.update(customer);
     }
 
+    public List<Map<String,Object>> findList(Customer customer) {
+        return customerMapper.findList(customer);
+    }
 
-
-//        public List<Customer> findAll(Customer customer){
-//                return customerMapper.findAll(customer);
-//        }
 }

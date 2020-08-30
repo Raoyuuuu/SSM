@@ -54,7 +54,7 @@
             </ul>
             <ul class="nav nav-sidebar" style="margin-top: -10px;">
                 <li class="active"><a href="${APP_PATH}/wellcome.jsp" target="mainFrame">工作台 <span class="sr-only">(current)</span></a></li>
-                <li><a href="${APP_PATH}/index.jsp" target="mainFrame">用户管理</a></li>
+                <li><a href="${APP_PATH}/index2.jsp" target="mainFrame">用户管理</a></li>
                 <li><a href="${APP_PATH}/views/customer.jsp" target="mainFrame">客户管理</a></li>
                 <li><a href="#">联系人管理</a></li>
                 <li><a href="#">合同</a></li>

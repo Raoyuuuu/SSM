@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>数据字典</title>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" href="/static/css/general.css">
 </head>
@@ -12,17 +12,17 @@
         <div class="layui-card">
             <div class="layui-card-header" style="height: 60px">
                 <div class="demoTable" style="padding-top: 10px">
-                    搜索客户：
+                    搜索：
                     <div class="layui-inline">
-                        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+                        <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="类型名称...">
                     </div>
-                    <button id="search" class="layui-btn" data-type="reload">搜索</button>
+                    <button id="search" class="layui-btn" data-type="reload">查询</button>
                 </div>
             </div>
-            <div class="layui-card-body" >
+            <div class="layui-card-body" style="margin-bottom: 20px">
                 <div>
                     <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
-                    <button class="layui-btn layui-btn-danger" data-type="getCheckData" id="deletList"><i class="layui-icon">&#xe640;</i>批量删除</button>
+                    <%--<button class="layui-btn layui-btn-danger" data-type="getCheckData" id="deletList"><i class="layui-icon">&#xe640;</i>批量删除</button>--%>
                 </div>
 
                 <table class="layui-hide" id="demo" lay-filter="test" ></table>
@@ -39,71 +39,53 @@
 </div>
 <!--编辑表单  隐藏-->
 <div class="layui-row" id="updateForm" style="display:none;margin:40px 30px 0 0">
-    <form class="layui-form" id="update_form">
+    <form class="layui-form">
+
         <div class="layui-form-item" style="display:none;width: 0;height: 0">
-            <label class="layui-form-label">客户ID</label>
+            <label class="layui-form-label">ID</label>
             <div class="layui-input-block">
-                <input type="text" name="cust_id" id="cust_id" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">客户名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="cust_name" id="cust_name" required  lay-verify="required" placeholder="请输入客户名称" autocomplete="new-text" class="layui-input">
+                <input type="text" name="dictId" id="dictId" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">来源</label>
+            <label class="layui-form-label">类型编码</label>
             <div class="layui-input-block">
-                <select name="cust_source" id="cust_source" lay-verify="required">
-                    <option value=""></option>
-                    <option value="6">电话营销</option>
-                    <option value="7">网络营销</option>
-                    <option value="35">活动推广</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">行业</label>
-            <div class="layui-input-block">
-                <select name="cust_industry" id="cust_industry" lay-verify="required">
-                    <option value=""></option>
-                    <option value="1">教育培训</option>
-                    <option value="2">电子商务</option>
-                    <option value="3">对外贸易</option>
-                    <option value="4">酒店旅游</option>
-                    <option value="5">房地产</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="layui-form-item" >
-            <label class="layui-form-label">类型</label>
-            <div class="layui-input-block">
-                <select name="cust_type" id="cust_type" lay-verify="required">
-                    <option value=""></option>
-                    <option value="18">基础客户</option>
-                    <option value="19">潜在客户</option>
-                    <option value="20">成功客户</option>
-                    <option value="21">失效客户</option>
-                </select>
+                <input type="text" name="dictTypeCode" id="dictTypeCode" required  lay-verify="required"  class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">电话</label>
+            <label class="layui-form-label">类型名称</label>
             <div class="layui-input-block">
-                <input type="text" id="cust_phone" name="cust_phone" required  lay-verify="required" placeholder="phone"  class="layui-input">
+                <input type="text" name="dictTypeName" id="dictTypeName" required  lay-verify="required"  class="layui-input">
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="dictItemName" id="dictItemName" required  lay-verify="required"  class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序字段</label>
+            <div class="layui-input-block">
+                <input type="text" name="dictSort" id="dictSort" required  lay-verify="required"  class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" name="dictMemo" id="dictMemo" required  lay-verify="required"  class="layui-input">
+            </div>
+        </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" id="updateBtn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -116,7 +98,7 @@
 
     $(function () {
         // $.ajax({
-        //     url:"/customer/findAll",
+        //     url:"/dict/findAll",
         //     type:"POST",
         //     dataType:"json",
         //     //async:false,
@@ -138,28 +120,23 @@
         table.render({
             elem: '#demo',
             //cellMinWidth: 20,
-            url: '/customer/findAll', //数据接口
+            url: '/dict/findAll', //数据接口
             parseData: function(result){ //res 即为原始返回的数据
-            return {
-                "code": result.code,
-                "data": result.map.data.list, //解析数据列表
-                "count":result.map.data.total,
-             };
-             },
+                return {
+                    "code": result.code,
+                    "data": result.map.data.list, //解析数据列表
+                    "count":result.map.data.total,
+                };
+            },
             page: true,//开启分页
             cols: [[ //表头
-                 {type: 'checkbox', fixed: true}
-                ,{field: 'cust_id', title: 'ID', align:'center',unresize: true, sort: true, fixed: true}
-                ,{field: 'cust_name', title: '客户名称',align:'center'}
-                ,{field: 'cust_source_name', title: '来源',align:'center', sort: true}
-                ,{field: 'cust_industry_name', title: '行业',align:'center', sort: true}
-                ,{field: 'cust_type_name', title: '类型',align:'center',sort: true}
-                ,{field: 'cust_phone', title: '电话',align:'center'}
-                ,{field: 'cust_create_time', title: '录入时间', align:'center',
-                    templet :function (data){
-                        return cust_create_time(data.cust_create_time);
-                    }
-                }
+                {type: 'checkbox', fixed: true}
+                ,{field: 'dictId', title: 'ID', align:'center',unresize: true, sort: true, fixed: true}
+                ,{field: 'dictTypeCode', title: '类型编码',align:'center', sort: true}
+                ,{field: 'dictTypeName', title: '类型名称',align:'center', sort: true}
+                ,{field: 'dictItemName', title: '项目名称',align:'center', sort: true}
+                ,{field: 'dictSort', title: '排序字段',align:'center', sort: true}
+                ,{field: 'dictMemo', title: '备注',align:'center'}
                 ,{field:'right', title: '操作',align:'center',toolbar:"#barDemo"}
             ]]
         });
@@ -173,7 +150,7 @@
                     curr: 1 //重新从第 1 页开始
                 }
                 ,where: {
-                        cust_name: demoReload.val()
+                    dictTypeName: demoReload.val()
                 }
             });
         });
@@ -182,11 +159,11 @@
         //新增
         $("#addBtn").click(function () {
             layer.open({
-                title: '客户添加',
+                title: '新增',
                 type: 2,
                 area: ['30%','60%'],
 
-                content: getUrl()+'layui/customer/add.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                content: getUrl()+'layui/dictionary/add.jsp' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
             });
         });
 
@@ -198,55 +175,56 @@
             id = obj.data.cust_id;
             //删除
             if(layEvent === 'del'){
-                var id = obj.data.cust_id;
-                layer.confirm('真的删除行么', function(index){
+                var id = obj.data.dictId;
+                layer.confirm('真的删除行么',{
+                    btn: ['确认', '取消'],
+                    offset: '300px'
+                }, function(index){
 
                     $.ajax({
-                       url:"/customer/delete",
-                       dataType:"json",
-                       data:{
-                           id:id
-                       },
-                       success:function (result) {
-                           if(result.code===0){
-                               layer.msg(result.msg, {
-                                   icon: 1,
-                                   time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                               }, function(){
-                                   obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                                   layer.close(index);
-                               });
-                           }
-                           else{
-                               layer.msg('操作失败', {
-                                   icon: 1,
-                                   time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                               }, function(){
-                                   parent.window.location.reload();
-                               });
-                           }
-                       }
+                        url:"/dict/delete",
+                        dataType:"json",
+                        data:{
+                            id:id
+                        },
+                        success:function (result) {
+                            if(result.code===0){
+                                layer.msg(result.msg, {
+                                    icon: 1,
+                                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    layer.close(index);
+                                });
+                            }
+                            else{
+                                layer.msg('操作失败', {
+                                    icon: 1,
+                                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    parent.window.location.reload();
+                                });
+                            }
+                        }
                     });
 
                 });
             }
             else if(layEvent === 'edit'){ //编辑
                 layer.open({
-                    title: '客户修改',
+                    title: '更新',
                     type: 1,
                     area: ['30%','60%'],
                     content : $('#updateForm'),
                     success : function(layero, index) {
                         // layer.iframeAuto(index);
                         // console.log(data)
-                        $('#cust_id').val(data.cust_id);
-                        $('#cust_name').val(data.cust_name);   //回显的操作最重要的一步就是这个啦，其他的也是差不多的
-                        $('#cust_phone').val(data.cust_phone);
-                        $("#cust_source").val(data.cust_source);
-                        $("#cust_industry").val(data.cust_industry);
-                        $("#cust_type").val(data.cust_type);
-
-                        form.render('select');
+                        $('#dictId').val(data.dictId);
+                        $('#dictTypeCode').val(data.dictTypeCode);   //回显的操作最重要的一步就是这个啦，其他的也是差不多的
+                        $('#dictTypeName').val(data.dictTypeName);
+                        $("#dictItemName").val(data.dictItemName);
+                        $("#dictSort").val(data.dictSort);
+                        $("#dictMemo").val(data.dictMemo);
                     }
                 });
             }
@@ -256,7 +234,7 @@
         form.on('submit(formDemo)', function(data){
             //console.log(JSON.stringify(data.field));
             $.ajax({
-                url:'/customer/update',
+                url:'/dict/update',
                 type:"POST",
                 dataType:"json",
                 data:data.field,
@@ -268,7 +246,7 @@
                             icon: 1,
                             time: 1000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
-                           window.location.reload();
+                            window.location.reload();
                         });
                     }
                     else{
@@ -281,7 +259,7 @@
 
         //批量删除
         $("#deletList").click(function () {
-                layer.msg('此功能暂未开通');
+            layer.msg('此功能暂未开通');
         });
     });
 

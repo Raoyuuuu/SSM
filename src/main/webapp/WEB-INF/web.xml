@@ -45,20 +45,7 @@
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
 
-  <!--shiro-->
-  <!--<filter>-->
-    <!--<filter-name>shiroFilter</filter-name>-->
-    <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--<init-param>-->
-      <!--<param-name>targetFilterLifecycle</param-name>-->
-      <!--<param-value>true</param-value>-->
-    <!--</init-param>-->
-  <!--</filter>-->
 
-  <!--<filter-mapping>-->
-    <!--<filter-name>shiroFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-  <!--</filter-mapping>-->
 
   <!-- 3、字符编码过滤器，一定要放在所有过滤器之前 -->
   <filter>
@@ -82,6 +69,43 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!--shiro-->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+   连接池 启用Web监控统计功能  begin
+  <filter>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <init-param>
+      <param-name>exclusions</param-name> <!-- 经常需要排除一些不必要的url -->
+      <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class><!-- 这个StatViewServlet的用途包括：提供监控信息展示的html页面;提供监控信息的JSON API -->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+
   <!-- 4、使用Rest风格的URI，将页面普通的post请求转为指定的delete或者put请求 -->
   <filter>
     <filter-name>HiddenHttpMethodFilter</filter-name>
@@ -99,8 +123,8 @@
     <filter-name>HttpPutFormContentFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-   <welcome-file-list>
-     <welcome-file>index.html</welcome-file>
-   </welcome-file-list>
+   <!--<welcome-file-list>-->
+     <!--<welcome-file>login.jsp</welcome-file>-->
+   <!--</welcome-file-list>-->
 
 </web-app>

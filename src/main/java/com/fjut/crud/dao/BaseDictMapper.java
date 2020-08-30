@@ -2,19 +2,16 @@ package com.fjut.crud.dao;
 
 import com.fjut.crud.bean.BaseDict;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BaseDictMapper {
 
-    int deleteByPrimaryKey(String dictId);
+    List<BaseDict> findAll(BaseDict baseDict);
 
-    int insert(BaseDict record);
+    void save(BaseDict baseDict);
 
-    int insertSelective(BaseDict record);
+    void delete(Integer id);
 
-
-    BaseDict selectByPrimaryKey(String dictId);
-
-
-    int updateByPrimaryKeySelective(BaseDict record);
-
-    int updateByPrimaryKey(BaseDict record);
+    void update(BaseDict baseDict);
 }

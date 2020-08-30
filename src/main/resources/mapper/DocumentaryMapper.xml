@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.DocumentaryMapper">
+
+
+    <!--分页查询 条件查询-->
+    <select id="findAll"  resultType="map">
+        SELECT
+        d.`dct_id` dctId,
+        d.`dct_no` dctNo,
+        d.`dct_way` dctWay,
+        d.`dct_state` dctState,
+        d.`dct_object` dctObject,
+        d.`dct_next_time` dctNextTime,
+        d.`dct_remark` dctRemark,
+        d.`dct_personnel` dctPersonnel,
+        d.`dct_create_time` dctCreateTime,
+        c.`cust_name` customer,
+        b.`dict_item_name` Way,
+        a.`dict_item_name` State
+        FROM
+        `documentary` d
+        LEFT JOIN customer c ON d.`dct_no` = c.`cust_id`
+        LEFT JOIN base_dict b ON d.`dct_way` = b.`dict_id`
+        LEFT JOIN base_dict a ON d.`dct_state` = a.`dict_id`
+        <where>
+            <if test="dctObject!=null">
+                and d.`dct_object` like '%${dctObject}%'
+            </if>
+        </where>
+    </select>
+
+    <!--新增-->
+    <insert id="save" parameterType="com.fjut.crud.bean.Documentary">
+     insert into documentary(dct_id,dct_no,dct_way,dct_state,dct_object,dct_next_time,dct_remark,dct_personnel,dct_create_time)
+     values(#{dctId},#{dctNo},#{dctWay},#{dctState},#{dctObject},#{dctNextTime},#{dctRemark},#{dctPersonnel},#{dctCreateTime})
+  </insert>
+
+    <!--删除-->
+    <delete id="delete" parameterType="Integer">
+    delete from  documentary where dct_id =#{id}
+  </delete>
+
+    <!--更新-->
+    <update id="update" parameterType="com.fjut.crud.bean.Documentary">
+        update documentary
+        <set>
+            <if test="dctNo!=null">
+                dct_no = #{dctNo},
+            </if>
+            <if test="dctWay!=null">
+                dct_way = #{dctWay},
+            </if>
+            <if test="dctState!=null">
+                dct_state = #{dctState},
+            </if>
+            <if test="dctObject!=null">
+                dct_object = #{dctObject},
+            </if>
+            <if test="dctNextTime!=null">
+                dct_next_time = #{dctNextTime},
+            </if>
+            <if test="dctRemark!=null">
+                dct_remark = #{dctRemark},
+            </if>
+            <if test="dctPersonnel!=null">
+                dct_personnel = #{dctPersonnel},
+            </if>
+            <if test="dctCreateTime!=null">
+                dct_create_time = #{dctCreateTime}
+            </if>
+
+        </set>
+        WHERE dct_id = #{dctId}
+    </update>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.UserRoleMapper">
+
+    <!--新增-->
+    <insert id="save" parameterType="com.fjut.crud.bean.UserRole">
+        insert into user_role(
+        uid,
+        rid)
+        values(#{uid},#{rid})
+    </insert>
+
+    <!--更新客户-->
+    <update id="update" parameterType="com.fjut.crud.bean.UserRole">
+        update user_role
+        <set>
+            <if test="uid!=null">
+                uid = #{uid},
+            </if>
+            <if test="rid!=null">
+                rid = #{rid},
+            </if>
+        </set>
+        WHERE uid = #{uid}
+    </update>
+
+</mapper>

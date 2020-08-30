@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjut.crud.dao.UserMapper">
+    <resultMap id="UserMap" type="com.fjut.crud.bean.User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="usercode" column="usercode"/>
+        <collection property="roles" ofType="com.fjut.crud.bean.Role">
+            <id property="rid" column="rid" />
+            <result property="rname" column="rname"/>
+            <collection property="permissions" ofType="com.fjut.crud.bean.Permission">
+                <id property="pid" column="pid" />
+                <result property="name" column="name" />
+                <result property="url" column="url" />
+                <result property="memo" column="memo" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findByUsername" parameterType="String" resultMap="UserMap">
+      SELECT u.*, r.*, p.*
+      FROM user u
+        INNER JOIN user_role ur on ur.uid = u.uid
+        INNER JOIN role r on r.rid = ur.rid
+        INNER JOIN permission_role pr on pr.rid = r.rid
+        INNER JOIN permission p on pr.pid = p.pid
+      WHERE u.username = #{username}
+    </select>
+
+    <!--分页 查询 条件查询-->
+    <select id="findAll" resultType="map">
+        SELECT u.*, r.*
+        FROM USER u
+        LEFT JOIN user_role ur ON ur.uid = u.uid
+        LEFT JOIN role r ON r.rid = ur.rid
+        <where>
+            <if test="usercode!=null">
+                usercode like "%"#{usercode}"%"
+            </if>
+        </where>
+    </select>
+
+    <!--新增-->
+    <insert id="save" parameterType="com.fjut.crud.bean.User">
+        insert into
+        user(
+        uid,
+        username,
+        usercode,
+        password,
+        gender,
+        phone,
+        birthday,
+        address,
+        createtime,
+        emergencyh,
+        emergencyp,
+        salt)
+        values(#{uid},#{username},#{usercode},#{password},#{gender},#{phone},
+        #{birthday},#{address},#{createtime},#{emergencyh},#{emergencyp},#{salt})
+    </insert>
+
+    <!--删除客户-->
+    <delete id="delete" parameterType="Integer">
+    delete from  user where uid =#{id}
+    </delete>
+
+    <!--更新客户-->
+    <update id="update" parameterType="com.fjut.crud.bean.User">
+        update user
+        <set>
+            <if test="username!=null">
+                username = #{username},
+            </if>
+            <if test="usercode!=null">
+                usercode = #{usercode},
+            </if>
+            <if test="password!=null">
+                password = #{password},
+            </if>
+            <if test="gender!=null">
+                gender = #{gender},
+            </if>
+            <if test="phone!=null">
+                phone = #{phone},
+            </if>
+            <if test="birthday!=null">
+                birthday = #{birthday},
+            </if>
+            <if test="address!=null">
+                address = #{address},
+            </if>
+            <if test="createtime!=null">
+                createtime = #{createtime},
+            </if>
+            <if test="emergencyh!=null">
+                emergencyh = #{emergencyh},
+            </if>
+            <if test="emergencyp!=null">
+                emergencyp = #{emergencyp},
+            </if>
+            <if test="salt!=null">
+                salt = #{salt}
+            </if>
+
+        </set>
+        WHERE uid = #{uid}
+    </update>
+
+    <select id="findByName" resultType="com.fjut.crud.bean.User">
+        select *
+        from user
+        where username = #{username}
+    </select>
+
+</mapper>

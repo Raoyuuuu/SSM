@@ -1,7 +1,7 @@
 package com.fjut.crud.bean;
 
 public class BaseDict {
-    private String dictId;
+    private Integer dictId;
 
     private String dictTypeCode;
 
@@ -17,12 +17,12 @@ public class BaseDict {
 
     private String dictMemo;
 
-    public String getDictId() {
+    public Integer getDictId() {
         return dictId;
     }
 
-    public void setDictId(String dictId) {
-        this.dictId = dictId == null ? null : dictId.trim();
+    public void setDictId(Integer dictId) {
+        this.dictId = dictId;
     }
 
     public String getDictTypeCode() {

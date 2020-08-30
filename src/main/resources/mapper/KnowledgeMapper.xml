@@ -48,6 +48,7 @@
         delete from knowledge where art_id =#{id}
     </delete>
 
+    <!--更新-->
     <update id="update" parameterType="com.fjut.crud.bean.Knowledge">
         update knowledge
         <set>

@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.crud.dao.BaseDictMapper">
+    <resultMap id="dictMap" type="com.fjut.crud.bean.BaseDict">
+        <id column="dict_id"  property="dictId" />
+        <result column="dict_type_code"  property="dictTypeCode" />
+        <result column="dict_type_name"  property="dictTypeName" />
+        <result column="dict_item_name"  property="dictItemName" />
+        <result column="dict_sort"  property="dictSort" />
+        <result column="dict_memo"  property="dictMemo" />
+        <result column="dict_enable"  property="dictEnable" />
+    </resultMap>
 
+    <!--分页查询 条件查询-->
+    <select id="findAll" resultMap="dictMap">
+        SELECT
+        *
+        FROM
+        base_dict
+        <where>
+            <if test="dictTypeName!=null and dictTypeName!=''">
+                <!--'%"#{artTitle}"%'-->
+                and dict_type_name like '%${dictTypeName}%'
+            </if>
+        </where>
+    </select>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.fjut.crud.bean.BaseDict">
+        insert into base_dict(dict_id,dict_type_code,dict_type_name,dict_item_name,dict_sort,dict_memo,dict_enable)
+        values (#{dictId},#{dictTypeCode},#{dictTypeName},#{dictItemName},#{dictSort},#{dictMemo},#{dictEnable})
+    </insert>
+
+    <!--删除-->
+    <delete id="delete" parameterType="Integer">
+        delete from base_dict where dict_id =#{id}
+    </delete>
+
+    <!--更新-->
+    <update id="update" parameterType="com.fjut.crud.bean.BaseDict">
+        update base_dict
+        <set>
+            <if test="dictTypeCode!=null">
+                dict_type_code = #{dictTypeCode},
+            </if>
+            <if test="dictTypeName!=null">
+                dict_type_name = #{dictTypeName},
+            </if>
+            <if test="dictItemName!=null">
+                dict_item_name = #{dictItemName},
+            </if>
+            <if test="dictSort!=null">
+                dict_sort = #{dictSort},
+            </if>
+            <if test="dictMemo!=null">
+                dict_memo = #{dictMemo},
+            </if>
+        </set>
+        WHERE dict_id = #{dictId}
+    </update>
 </mapper>

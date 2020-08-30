@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" style="margin-top: 40px;margin-right: 50px;">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html style="margin-top: 40px;margin-right: 50px;">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,11 +17,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">来源</label>
         <div class="layui-input-block">
-            <select name="cust_source" lay-verify="required">
+            <select name="cust_source" id="cust_source" lay-verify="required">
                 <option value=""></option>
-                <option value="6">电话营销</option>
-                <option value="7">网络营销</option>
-                <option value="35">活动推广</option>
             </select>
         </div>
     </div>
@@ -30,13 +27,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">行业</label>
         <div class="layui-input-block">
-            <select name="cust_industry" lay-verify="required">
+            <select name="cust_industry" id="cust_industry" lay-verify="required">
                 <option value=""></option>
-                <option value="1">教育培训</option>
-                <option value="2">电子商务</option>
-                <option value="3">对外贸易</option>
-                <option value="4">酒店旅游</option>
-                <option value="5">房地产</option>
             </select>
         </div>
     </div>
@@ -44,20 +36,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label">类型</label>
         <div class="layui-input-block">
-            <select name="cust_type" lay-verify="required">
+            <select name="cust_type" id="cust_type" lay-verify="required">
                 <option value=""></option>
-                <option value="18">基础客户</option>
-                <option value="19">潜在客户</option>
-                <option value="20">成功客户</option>
-                <option value="21">失效客户</option>
             </select>
         </div>
     </div>
+
 
     <div class="layui-form-item">
         <label class="layui-form-label">电话</label>
         <div class="layui-input-block">
             <input type="text" name="cust_phone" required  lay-verify="required" placeholder="phone"  class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="cust_email" required  lay-verify="required" placeholder="CRM@126.com"  class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">创建人</label>
+        <div class="layui-input-block">
+            <input type="text" name="cust_operator" required  lay-verify="required" value="${user.usercode}"  class="layui-input layui-disabled">
         </div>
     </div>
 
@@ -74,12 +77,43 @@
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/layui/layui.js"></script>
 <script>
+    $(function () {
+
+    });
+
     //Demo
     layui.use(['form','layer'], function(){
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
         var cust_create_time = CurentTime();
+
+        $.ajax({
+            url:'/dict/list',
+            type:'GET',
+            success:function (data) {
+                var lists = data.map.data;
+                console.log(lists);
+                $.each(lists,function () {
+                    if(this.dictTypeCode==005){
+                        var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
+                        options.appendTo("#cust_type");
+                        //form.render("select");
+                    }
+                    if(this.dictTypeCode==002){
+                        var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
+                        options.appendTo("#cust_source");
+                        //form.render("select");
+                    }
+                    if(this.dictTypeCode==001){
+                        var options = $("<option></option>").append(this.dictItemName).attr("value",this.dictId);
+                        options.appendTo("#cust_industry");
+                    }
+                    form.render("select");
+                });
+            }
+        });
+
         //监听提交
         form.on('submit(formDemo)', function(data){
             //layer.msg(JSON.stringify(data.field));
@@ -96,6 +130,8 @@
                     cust_industry:data.field.cust_industry,
                     cust_type:data.field.cust_type,
                     cust_phone:data.field.cust_phone,
+                    cust_email:data.field.cust_email,
+                    cust_operator:data.field.cust_operator,
                     cust_create_time:cust_create_time
                 },
                 success:function(result){

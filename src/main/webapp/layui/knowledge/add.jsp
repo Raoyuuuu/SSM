@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" style="margin-top: 40px;margin-right: 50px;">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html style="margin-top: 40px;margin-right: 50px;">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+
 <!--新增表单  隐藏-->
 <form class="layui-form">
 
@@ -52,7 +53,6 @@
         </div>
     </form>
 
-
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/layui/layui.js"></script>
 <script>
@@ -91,12 +91,8 @@
             ]
         });
 
-        //$("#addArtForm").click(function () {
-
         form.on('submit(addArt)', function(data){
-            console.log(data.field);
             var artContent = layedit.getContent(index);
-            //console.log(artContent);
             $.ajax({
                 url:"/knowledge/save",
                 type:"POST",

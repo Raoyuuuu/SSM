@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>知识库</title>
@@ -23,7 +23,7 @@
                     <div class="layui-inline">
                         <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="标题...">
                     </div>
-                    <button id="search" class="layui-btn" data-type="reload">搜索</button>
+                    <button id="search" class="layui-btn" data-type="reload">查询</button>
                 </div>
             </div>
             <div class="layui-card-body" >
@@ -121,32 +121,12 @@
         var form = layui.form;
         var $ = layui.$;
         var layedit = layui.layedit;
-
-        //富文本编辑器
+        var index;
         layedit.set({
             uploadImage: {//图片上传
                 url: '/uploadFile' //接口url
                 ,type: 'POST' //默认post
             }
-        });
-        var index = layedit.build('artContent',{
-            tool: [
-                'strong' //加粗
-                ,'italic' //斜体
-                ,'underline' //下划线
-                ,'del' //删除线
-
-                ,'|' //分割线
-
-                ,'left' //左对齐
-                ,'center' //居中对齐
-                ,'right' //右对齐
-                ,'link' //超链接
-                ,'unlink' //清除链接
-                ,'face'
-                ,'image' //插入图片
-                ,'help' //帮助
-            ]
         });
 
         //表格数据显示
@@ -202,10 +182,9 @@
                 title: '新增',
                 type: 2,
                 area: ['60%','70%'],
-                content: getUrl()+'layui/knowledge/add.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                content: getUrl()+'layui/knowledge/add.jsp' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
             });
         });
-
 
         //监听工具条
         table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -254,7 +233,7 @@
                                     icon: 1,
                                     time: 1000 //2秒关闭（如果不配置，默认是3秒）
                                 }, function(){
-                                    parent.window.location.reload();
+                                    window.location.reload();
                                 });
                             }
                         }
@@ -279,6 +258,26 @@
                         form.render('select');
                     }
                 });
+                //富文本编辑器
+                index = layedit.build('artContent',{
+                    tool: [
+                        'strong' //加粗
+                        ,'italic' //斜体
+                        ,'underline' //下划线
+                        ,'del' //删除线
+
+                        ,'|' //分割线
+
+                        ,'left' //左对齐
+                        ,'center' //居中对齐
+                        ,'right' //右对齐
+                        ,'link' //超链接
+                        ,'unlink' //清除链接
+                        ,'face'
+                        ,'image' //插入图片
+                        ,'help' //帮助
+                    ]
+                });
                 layedit.setContent(index,body);
             }
         });
@@ -288,19 +287,17 @@
             //console.log(JSON.stringify(data.field));
             var artContent = layedit.getContent(index);
             var time = CurentTime();
-            //console.log(artContent);
             $.ajax({
                 url:"/knowledge/update",
                 type:"POST",
                 dataType:"json",
                 data:{
-                    artId:data.field.artId,
-                    artCate:data.field.artCate,
-                    artTitle:data.field.artTitle,
-                    artContent:artContent,
-                    artAuthor:data.field.artAuthor,
-
-                    artUpdateTime:time
+                    'artId':data.field.artId,
+                    'artCate':data.field.artCate,
+                    'artTitle':data.field.artTitle,
+                    'artContent':artContent,
+                    'artAuthor':data.field.artAuthor,
+                    'artUpdateTime':time
                 },
                 success:function (result) {
 
@@ -309,7 +306,7 @@
                             icon: 1,
                             time: 1000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
-                            parent.window.location.reload();
+                            window.location.reload();
                         });
                     }
                     else{
@@ -325,7 +322,6 @@
             layer.msg('此功能暂未开通');
         });
     });
-
 
     //时间戳转换
     function cust_create_time(v){
